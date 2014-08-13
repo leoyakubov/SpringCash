@@ -8,13 +8,16 @@
     <name>SpringCash</name>
 
     <properties>
-        <java-version>1.8</java-version>
+        <java-version>1.7</java-version>
         <spring.version>4.0.6.RELEASE</spring.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+        <hibernate.validator.version>5.1.2.Final</hibernate.validator.version>
+        <junit.version>4.8.2</junit.version>
     </properties>
 
     <dependencies>
 
-        <!-- Spring core, MVC and related -->
+        <!-- Spring  -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -38,6 +41,19 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
         </dependency>
 
         <!-- Servlet, JSP, JSTL -->
@@ -64,7 +80,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
