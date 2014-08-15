@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Transaction Manager -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <!-- Connection properties -->
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:jdbc.properties</value>
+                <value>classpath:hibernate.properties</value>
             </list>
         </property>
-
     </bean>
 
     <!-- bean dataSource -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.databaseurl}"
-          p:username="${jdbc.username}" p:password="${jdbc.password}" />
+          p:driverClassName="${hibernate.connection.driver_class}" p:url="${hibernate.connection.url}"
+          p:username="${hibernate.connection.username}" p:password="${hibernate.connection.password}" />
 
     <!-- Hibernate Session Factory Configuration -->
     <bean id="sessionFactory"
@@ -26,5 +35,4 @@
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
-
 </beans>

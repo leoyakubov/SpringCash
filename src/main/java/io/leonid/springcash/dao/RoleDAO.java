@@ -11,6 +11,14 @@ import java.util.List;
  */
 @Repository
 public class RoleDAO extends GenericDAO<Role> {
+    public RoleDAO() {
+        super(Role.class);
+    }
+
+    public RoleDAO(Class<Role> persistentClass) {
+        super(persistentClass);
+    }
+
     public Role findByName(String name) {
         if (name == null) {
             return null;

@@ -11,6 +11,14 @@ import java.util.List;
  */
 @Repository
 public class UserDAO extends GenericDAO<User> {
+    public UserDAO() {
+        super(User.class);
+    }
+
+    public UserDAO(Class<User> persistentClass) {
+        super(persistentClass);
+    }
+
     public User findByLogin(String login) {
         if (login == null) {
             return null;

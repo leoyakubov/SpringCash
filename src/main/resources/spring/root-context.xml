@@ -6,16 +6,32 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!-- Root Context: defines shared resources visible to all other web components -->
+
+    <!-- (@Annotation-based configuration) -->
+    <mvc:annotation-driven />
+
     <!-- Data Access Resources -->
     <import resource="data.xml" />
 
-    <mvc:annotation-driven />
+    <!-- Folders where to search for (@Repository, @Service, @Controller) -->
+    <context:component-scan base-package="io.leonid.springcash.dao"/>
+    <context:component-scan base-package="io.leonid.springcash.service"/>
+    <context:component-scan base-package="io.leonid.springcash.web"/>
 
-    <context:component-scan base-package="io.leonid.springcash"/>
-
+    <!-- Resolves views selected for rendering by @Controllers to .jsp resources
+            in the /WEB-INF/views directory -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- Messages-->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages/messages" />
+        <property name="cacheSeconds" value="0" />
+        <property name="defaultEncoding" value="UTF-8" />
     </bean>
 
 </beans>

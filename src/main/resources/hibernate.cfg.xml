@@ -4,22 +4,22 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-         <!-- Database connection settings -->
-        <property name="connection.driver_class">${jdbc.dialect}</property>
+        <!-- &lt;!&ndash; Database connection settings &ndash;&gt;
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/SpringCash</property>
         <property name="connection.username">springcashuser</property>
         <property name="connection.password">springcashpass</property>
 
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
-
-        <!-- SQL dialect -->
+        &lt;!&ndash; SQL dialect &ndash;&gt;
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
-        <!-- Echo all executed SQL to stdout -->
+        &lt;!&ndash; JDBC connection pool (use the built-in) &ndash;&gt;
+        <property name="connection.pool_size">1</property>
+
+        &lt;!&ndash; Echo all executed SQL to stdout &ndash;&gt;
         <property name="show_sql">true</property>
 
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>-->
 
 
         <!--Mapped classes -->
