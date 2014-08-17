@@ -8,8 +8,6 @@
 
     <!-- Root Context: defines shared resources visible to all other web components -->
 
-    <!-- (@Annotation-based configuration) -->
-    <mvc:annotation-driven />
 
     <!-- Data Access Resources -->
     <import resource="data.xml" />
@@ -17,14 +15,6 @@
     <!-- Folders where to search for (@Repository, @Service, @Controller) -->
     <context:component-scan base-package="io.leonid.springcash.dao"/>
     <context:component-scan base-package="io.leonid.springcash.service"/>
-    <context:component-scan base-package="io.leonid.springcash.web"/>
-
-    <!-- Resolves views selected for rendering by @Controllers to .jsp resources
-            in the /WEB-INF/views directory -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
 
     <!-- Messages-->
     <bean id="messageSource"
@@ -33,5 +23,4 @@
         <property name="cacheSeconds" value="0" />
         <property name="defaultEncoding" value="UTF-8" />
     </bean>
-
 </beans>

@@ -4,16 +4,7 @@
        xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- @Transactional -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <!-- Transaction Manager -->
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <!-- Connection properties -->
+        <!-- Connection properties -->
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -34,5 +25,14 @@
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+
+    <!-- @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Transaction Manager -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>

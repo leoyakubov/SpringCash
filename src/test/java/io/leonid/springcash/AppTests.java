@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration("file:../../../../../main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration("classpath:web-tests-config.xml")
 public class AppTests {
     private MockMvc mockMvc;
 
@@ -32,8 +32,6 @@ public class AppTests {
 
     @Test
     public void simple() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("hello"));
+        mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("hello"));
     }
 }
