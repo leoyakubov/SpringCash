@@ -31,11 +31,11 @@ public class HibernateTest {
         SessionFactory factory = configuration.buildSessionFactory(builder.build());
         Session session = factory.openSession();
 
-//        Role role = new Role();
-//        role.setName(Role.ROLE_USER);
-//        session.beginTransaction();
-//        session.save(role);
-//        session.getTransaction().commit();
+        /*Role role = new Role();
+        role.setName(Role.ROLE_USER);
+        session.beginTransaction();
+        session.save(role);
+        session.getTransaction().commit();*/
 
 //        User user = new User();
 //        user.setLogin("");

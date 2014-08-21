@@ -1,5 +1,6 @@
 package io.leonid.springcash;
 
+import org.hibernate.annotations.SourceType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,6 @@ public class AppTests {
 
     @Test
     public void simple() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("hello"));
+        mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("redirect"));
     }
 }

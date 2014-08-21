@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing
 		infrastructure -->
@@ -14,11 +20,19 @@
     <!-- Folders where to search for (@Controller) -->
     <context:component-scan base-package="io.leonid.springcash.web"/>
 
+    <mvc:view-controller path="/" view-name="redirect" />
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
             in the /WEB-INF/views directory -->
-    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-</beans>
+    <beans:bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+                p:prefix="/WEB-INF/pages/" p:suffix=".jsp" p:order="2"/>
+
+    <!-- Tiles -->
+    <beans:bean id="viewResolver"
+                class="org.springframework.web.servlet.view.ResourceBundleViewResolver"
+                p:basename="tiles/views" p:order="1"/>
+
+    <beans:bean id="tilesConfigurer"
+                class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+                p:definitions="classpath:tiles/tiles-defs.xml" />
+</beans:beans>

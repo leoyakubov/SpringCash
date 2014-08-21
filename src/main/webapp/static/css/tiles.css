@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, Verdana, sans-serif;
+}
+
+.header,.footer,.menuPane,.bodyPane {
+    border: 1px solid gray;
+}
+
+.header,.main,.footer {
+    width: 960px;
+    color: #665544;
+    margin: 0px auto;
+    clear: both;
+}
+
+.menuPane,.bodyPane {
+    float: left;
+    margin: 10px;
+    min-height: 400px;
+}
+
+.menuPane {
+    width: 100px;
+}
+
+.bodyPane {
+    width: 815px;
+}
+
+.mainMenu {
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+}

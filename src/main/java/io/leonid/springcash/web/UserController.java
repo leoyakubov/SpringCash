@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping("/users")
+    @RequestMapping("/users.htm")
     public String listUsers(Map<String, Object> map) {
         map.put("user", new User());
         map.put("userList", userService.findAll());
@@ -32,12 +32,12 @@ public class UserController {
         return "users";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/users.htm", method = RequestMethod.POST)
     public String addContact(@ModelAttribute("user")
                              User user, BindingResult result) {
         userService.insertOrUpdate(user);
 
-        return "redirect:/users";
+        return "redirect:/users.htm";
     }
 
     @RequestMapping("/deleteUser/{userId}")

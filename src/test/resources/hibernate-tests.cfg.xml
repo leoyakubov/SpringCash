@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- &lt;!&ndash; Database connection settings &ndash;&gt;
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/SpringCash</property>
+        <property name="connection.username">springcashuser</property>
+        <property name="connection.password">springcashpass</property>
+
+        &lt;!&ndash; SQL dialect &ndash;&gt;
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        &lt;!&ndash; JDBC connection pool (use the built-in) &ndash;&gt;
+        <property name="connection.pool_size">1</property>
+
+        &lt;!&ndash; Echo all executed SQL to stdout &ndash;&gt;
+        <property name="show_sql">true</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>-->
+
+
+        <!--Mapped classes -->
+        <mapping class="io.leonid.springcash.model.BaseEntity" />
+        <mapping class="io.leonid.springcash.model.User" />
+        <mapping class="io.leonid.springcash.model.Role" />
+    </session-factory>
+</hibernate-configuration>
