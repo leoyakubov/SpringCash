@@ -1,15 +1,25 @@
 package io.leonid.springcash.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/home.htm")
 public class HomeController {
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+    private static int callNumber = 1;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
+        logger.info("Welcome home! Current time is: "+ new Date());
+        logger.info("Call number: {}", callNumber++);
 		model.addAttribute("welcomeMsg", "Welcome");
 		return "home";
 	}

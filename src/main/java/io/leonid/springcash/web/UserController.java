@@ -3,6 +3,8 @@ package io.leonid.springcash.web;
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.RoleService;
 import io.leonid.springcash.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,8 @@ import java.util.Map;
  */
 @Controller
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -25,6 +29,7 @@ public class UserController {
 
     @RequestMapping("/users.htm")
     public String listUsers(Map<String, Object> map) {
+        logger.info("UserController.listUsers called");
         map.put("user", new User());
         map.put("userList", userService.findAll());
         map.put("roleList", roleService.findAll());
@@ -37,7 +42,7 @@ public class UserController {
                              User user, BindingResult result) {
         userService.insertOrUpdate(user);
 
-        return "redirect:/users.htm";
+        return "redirect:/users";
     }
 
     @RequestMapping("/deleteUser/{userId}")

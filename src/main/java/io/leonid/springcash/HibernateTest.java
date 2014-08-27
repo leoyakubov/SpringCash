@@ -1,6 +1,5 @@
 package io.leonid.springcash;
 
-import io.leonid.springcash.dao.RoleDAO;
 import io.leonid.springcash.dao.UserDAO;
 import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
@@ -9,14 +8,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by leonid on 13.08.14.
@@ -24,6 +20,8 @@ import java.util.Set;
 public class HibernateTest {
     @Autowired
     private static UserDAO userDAO;
+
+    private static final Logger logger = LoggerFactory.getLogger(HibernateTest.class);
 
     public static void main(String args[]){
         Configuration configuration = new Configuration().configure();
@@ -58,28 +56,31 @@ public class HibernateTest {
 //        session.getTransaction().commit();
 
         session.beginTransaction();
-        Query query = session.createQuery("from " + User.class.getName() + " u WHERE u.role = (select id from  " + Role.class.getName() + " r where r.name='Admin')");
+        //Query query = session.createQuery("from " + User.class.getName() + " u WHERE u.role = (select id from  " + Role.class.getName() + " r where r.name='Admin')");
+        Query query = session.createQuery("from " + User.class.getName());
         List<User> users = query.list();
 
-        System.out.println("Users:");
+        logger.info("Users:");
         for (User uzer : users) {
-            System.out.println(uzer);
-            session.delete(uzer);
-            System.out.println(uzer.getId() + "deleted");
+            logger.info("{}", uzer.toString());
+            //session.delete(uzer);
+            //logger.info("{} deleted", uzer.getId());
         }
         session.getTransaction().commit();
+
 
         session.beginTransaction();
         query = session.createQuery("from " + Role.class.getName());
         List<Role> roles = query.list();
 
-        System.out.println("Roles:");
+        logger.info("Roles:");
         for (Role role_ : roles) {
-            if (role_.getName().equals("Admin")) {
+            /*if (role_.getName().equals("Admin")) {
                 session.delete(role_);
-            }
-            System.out.println(role_);
+            }*/
+            logger.info("{}", role_.toString());
         }
+
         session.getTransaction().commit();
         session.close();
     }

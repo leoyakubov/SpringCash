@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <appender name="OUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %thread %-5p %c{1}:%L - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="debug" />
+            <param name="LevelMax" value="info" />
+        </filter>
+    </appender>
+
+    <appender name="ERR" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="warn" />
+        <param name="Target" value="System.err" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <!--<param name="ConversionPattern" value="%-4r %-5p %x %l %n%-8x -%m%n" />-->
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %thread %-5p %c{1}:%L - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="org.hibernate">
+        <level value="info" />
+        <appender-ref ref="OUT" />
+        <appender-ref ref="ERR" />
+    </logger>
+
+    <root>
+        <priority value="info" />
+        <appender-ref ref="OUT" />
+        <appender-ref ref="ERR" />
+    </root>
+
+</log4j:configuration>
