@@ -1,8 +1,9 @@
 package io.leonid.springcash.web;
 
 import io.leonid.springcash.model.User;
-import io.leonid.springcash.service.RoleService;
-import io.leonid.springcash.service.UserService;
+import io.leonid.springcash.service.IRoleService;
+import io.leonid.springcash.service.IUserService;
+import io.leonid.springcash.service.impl.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
     @Autowired
-    private RoleService roleService;
+    private IRoleService roleService;
 
     @RequestMapping("/users.htm")
     public String listUsers(Map<String, Object> map) {

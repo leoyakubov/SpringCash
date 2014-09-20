@@ -1,6 +1,6 @@
 package io.leonid.springcash;
 
-import io.leonid.springcash.dao.UserDAO;
+import io.leonid.springcash.dao.impl.UserDAO;
 import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import org.hibernate.Query;

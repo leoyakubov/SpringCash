@@ -1,5 +1,6 @@
-package io.leonid.springcash.dao;
+package io.leonid.springcash.dao.impl;
 
+import io.leonid.springcash.dao.IDAO;
 import io.leonid.springcash.model.BaseEntity;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by leonid on 14.08.14.
  */
 @Repository
-public class GenericDAO<T extends BaseEntity>{
+public class GenericDAO<T extends BaseEntity> implements IDAO<T> {
     protected Class<T> persistentClass;
 
     @Autowired
@@ -24,10 +25,12 @@ public class GenericDAO<T extends BaseEntity>{
         this.persistentClass = persistentClass;
     }
 
+    @Override
     public List<T> findAll() {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).list();
     }
 
+    @Override
     public T findByID(final Integer id) {
         if (id == null) {
             return null;
@@ -38,6 +41,7 @@ public class GenericDAO<T extends BaseEntity>{
         return entity;
     }
 
+    @Override
     public T insertOrUpdate(final T entity) {
         if (entity.getId() == null) {
             Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
@@ -51,6 +55,7 @@ public class GenericDAO<T extends BaseEntity>{
         }
     }
 
+    @Override
     public void delete(final T entity) {
         sessionFactory.getCurrentSession().delete(entity);
     }
