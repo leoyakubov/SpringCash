@@ -20,9 +20,19 @@
         <put-attribute name="body"   value="/WEB-INF/pages/home.jsp"/>
     </definition>
 
-    <definition name="users" extends="baseLayout">
+    <definition name="user/list" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.users"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/users.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/user/list.jsp"/>
+    </definition>
+
+    <definition name="user/add" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.users"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/user/add.jsp"/>
+    </definition>
+
+    <definition name="user/edit" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.users"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/user/edit.jsp"/>
     </definition>
 
     <definition name="about" extends="baseLayout">

@@ -59,4 +59,8 @@ public class GenericDAO<T extends BaseEntity> implements IDAO<T> {
     public void delete(final T entity) {
         sessionFactory.getCurrentSession().delete(entity);
     }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

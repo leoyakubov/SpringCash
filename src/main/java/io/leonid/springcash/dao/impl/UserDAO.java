@@ -26,7 +26,7 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO {
             return null;
         }
 
-        Query query = sessionFactory.getCurrentSession().createQuery("FROM Users WHERE login=:login");
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM " + User.class.getName() + " WHERE login=:login");
         query.setParameter("login", login);
         List<User> listUser = query.list();
 

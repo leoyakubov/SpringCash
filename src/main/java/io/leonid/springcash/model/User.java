@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Created by leonid on 13.08.14.
@@ -13,10 +14,12 @@ import javax.persistence.*;
 public class User extends BaseEntity{
     @Column(name = "login", nullable = false, unique = true)
     @NotEmpty
+    @Size(min=3, max=30)
     private String login;
 
     @Column(name = "password", nullable = false, unique = false)
     @NotEmpty
+    @Size(min=6, max=40)
     private String password;
 
     @Column(name = "email", nullable = false, unique = true)

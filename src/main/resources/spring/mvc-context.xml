@@ -20,7 +20,7 @@
     <!-- Folders where to search for (@Controller) -->
     <context:component-scan base-package="io.leonid.springcash.web"/>
 
-    <mvc:view-controller path="/" view-name="redirect" />
+    <mvc:view-controller path="/" view-name="redirect"/>
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
             in the /WEB-INF/views directory -->

@@ -29,6 +29,58 @@ public class HibernateTest {
         SessionFactory factory = configuration.buildSessionFactory(builder.build());
         Session session = factory.openSession();
 
+       test3(session);
+    }
+
+    private static void test3(Session session) {
+        Query query = session.createQuery("from " + User.class.getName() + " u WHERE u.login = 'user1'");
+        User user = (User) query.list().get(0);;
+        System.out.println("===============================");
+        System.out.println("Found user: " + user);
+        System.out.println("===============================");
+
+        user.setActive(!user.isActive());
+
+        Role role = new Role();
+        if (user.getRole().getName().equals("User")) {
+            role.setId(3);
+            role.setName("Administreator");
+        }
+        else {
+            role.setId(5);
+            role.setName("User");
+        }
+
+        user.setRole(role);
+
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+
+
+        System.out.println("===============================");
+        System.out.println("Saved user: " + user);
+        System.out.println("===============================");
+    }
+
+
+    private static void test2(SessionFactory sessionFactory) {
+        UserDAO dao = new UserDAO();
+        dao.setSessionFactory(sessionFactory);
+        User user = dao.findByLogin("user1");
+        System.out.println("===============================");
+        System.out.println("Found user: " + user);
+        System.out.println("===============================");
+        user.setActive(!user.isActive());
+
+        User savedUser = dao.insertOrUpdate(user);
+
+        System.out.println("===============================");
+        System.out.println("Saved user: " + savedUser);
+        System.out.println("===============================");
+    }
+
+    private static void test1(Session session) {
         /*Role role = new Role();
         role.setName(Role.ROLE_USER);
         session.beginTransaction();

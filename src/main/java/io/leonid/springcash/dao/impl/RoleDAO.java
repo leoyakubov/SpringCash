@@ -26,7 +26,7 @@ public class RoleDAO extends GenericDAO<Role> implements IRoleDAO {
             return null;
         }
 
-        Query query = sessionFactory.getCurrentSession().createQuery("FROM Roles WHERE name=:name");
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM " + Role.class.getName() + " WHERE name=:name");
         query.setParameter("name", name);
         List<Role> listRole = query.list();
 

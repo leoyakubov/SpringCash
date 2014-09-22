@@ -12,7 +12,7 @@
     <!-- Data Access Resources -->
     <import resource="data.xml" />
 
-    <!-- Folders where to search for (@Repository, @Service, @Controller) -->
+    <!-- Folders where to search for (@Repository, @Service) -->
     <context:component-scan base-package="io.leonid.springcash.dao"/>
     <context:component-scan base-package="io.leonid.springcash.service"/>
 
@@ -20,4 +20,8 @@
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:basename="classpath:messages/messages" p:cacheSeconds="0" p:defaultEncoding="UTF-8"/>
+
+    <!-- Validators -->
+    <bean id="userValidator"
+          class="io.leonid.springcash.web.user.UserValidator"/>
 </beans>
