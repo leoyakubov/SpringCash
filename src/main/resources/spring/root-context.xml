@@ -24,4 +24,6 @@
     <!-- Validators -->
     <bean id="userValidator"
           class="io.leonid.springcash.web.user.UserValidator"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 </beans>

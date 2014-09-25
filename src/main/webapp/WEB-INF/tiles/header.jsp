@@ -9,5 +9,5 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <div class="header">
-    <h1>Header</h1>
+    <h4>Header</h4>
 </div>

@@ -17,7 +17,7 @@
     <c:set var="titleKey">
         <tiles:insertAttribute name="pageTitle" ignore="true"/>
     </c:set>
-    <title><spring:message code="title.appTitle"/> - <spring:message code="${titleKey}"/></title>
+    <title><spring:message code="title.apptitle"/> - <spring:message code="${titleKey}"/></title>
 
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/static/css/tiles.css"/>"/>
 </head>

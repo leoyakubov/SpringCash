@@ -28,7 +28,7 @@ public class User extends BaseEntity{
     private String email;
 
     @Column(name = "isActive", nullable = false, unique = false)
-    private boolean isActive;
+    private boolean isActive = true;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role", nullable = false)

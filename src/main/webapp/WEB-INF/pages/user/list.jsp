@@ -12,10 +12,18 @@
 
 <html>
 <head>
+    <script type="text/javascript">
+        function deleteItem(id) {
+            var url = "/user/delete.htm?userId=" + id;
+            var OK = confirm('Delete this user?');
+            if (OK) {
+                window.location = url;
+            }
+        }
+    </script>
 </head>
 <body>
-
-    <h2>Users</h2>
+    <h2><spring:message code="label.users"/></h2>
     <c:if  test="${!empty userList}">
         <table class="data">
             <tr>
@@ -26,6 +34,10 @@
                 <th>Role</th>
                 <th>&nbsp;</th>
             </tr>
+
+            <div>${errorMessage}</div>
+            <div>${successMessage}</div>
+
             <c:forEach items="${userList}" var="user">
                 <tr>
                     <td>${user.lastName}, ${user.firstName} </td>
@@ -33,8 +45,10 @@
                     <td>${user.email}</td>
                     <td>${user.active}</td>
                     <td>${user.role.name}</td>
-                    <td><a href="/user/edit.htm?userId=${user.id}">edit</a></td>
-                    <td><a href="/user/delete.htm?userId=${user.id}">delete</a></td>
+                    <td><a href="/user/edit.htm?userId=${user.id}"><spring:message code="label.edituser"/></a></td>
+                    <%--<td><a href="/user/edit.htm?userId=1024">edit</a></td>--%>
+                    <td><form:errors path="user" cssStyle="color: #ff0000;"/></td>
+                    <td><a href="#" onclick='javascript:deleteItem("${user.id}")'>delete</a></td>
                 </tr>
             </c:forEach>
         </table>

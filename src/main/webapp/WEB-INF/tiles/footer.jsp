@@ -7,9 +7,5 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="footer">
-    <h3>Footer</h3>
-    <p>
-        powered by <a href="#" target="_blank"></a>.
-        design by <a href="#" title="056_java" target="_blank"></a>
-    </p>
+    <h4>Footer</h4>
 </div>

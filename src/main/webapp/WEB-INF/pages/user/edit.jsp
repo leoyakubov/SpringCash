@@ -16,38 +16,38 @@
 </head>
 <body>
     <h2>Edit user</h2>
-    ${userModel.id}
-    ${userModel.firstName}
-    ${userModel.login}
-    ${userModel.role.name}
-    <h2>-----------------------------------</h2>
-
     <c:if  test="${!empty userModel}">
         <form:form method="post" action="edit.htm" commandName="userModel">
             <table>
                 <tr>
                     <td><form:label path="login"><spring:message code="label.login"/></form:label></td>
-                    <td><form:input path="login" readonly="true"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="firstName"><spring:message code="label.firstname"/>user.firstname</form:label></td>
-                    <td><form:input path="firstName" /></td>
-                </tr>
-                <tr>
-                    <td><form:label path="lastName"><spring:message code="label.lastname"/></form:label></td>
-                    <td><form:input path="lastName" /></td>
-                </tr>
-                <tr>
-                    <td><form:label path="email"><spring:message code="label.email"/></form:label></td>
-                    <td><form:input path="email" /></td>
+                    <td><form:input path="login" /></td>
+                    <td><form:errors path="login" cssStyle="color: #ff0000;"/></td>
                 </tr>
                 <tr>
                     <td><form:label path="password"><spring:message code="label.password"/></form:label></td>
                     <td><form:password path="password" showPassword="true"/></td>
+                    <td><form:errors path="password" cssStyle="color: #ff0000;"/></td>
                 </tr>
                 <tr>
                     <td><form:label path="confirmedPassword"><spring:message code="label.confirmedpassword"/></form:label></td>
                     <td><form:password path="confirmedPassword" showPassword="true"/></td>
+                    <td><form:errors path="confirmedPassword" cssStyle="color: #ff0000;"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="email"><spring:message code="label.email"/></form:label></td>
+                    <td><form:input path="email" /></td>
+                    <td><form:errors path="email" cssStyle="color: #ff0000;"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="firstName"><spring:message code="label.firstname"/></form:label></td>
+                    <td><form:input path="firstName" /></td>
+                    <td><form:errors path="firstName" cssStyle="color: #ff0000;"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="lastName"><spring:message code="label.lastname"/></form:label></td>
+                    <td><form:input path="lastName" /></td>
+                    <td><form:errors path="lastName" cssStyle="color: #ff0000;"/></td>
                 </tr>
                 <tr>
                     <td><form:label path="active"><spring:message code="label.isactive"/></form:label></td>
@@ -55,15 +55,13 @@
                 </tr>
                 <tr>
                     <td><form:label path="role"><spring:message code="label.role"/></form:label></td>
-                    <td><form:select path="role.id">
-                        <%--<form:option value="${user.role.id}" label="${user.role.name}" />--%>
-                        <form:options items="${roleList}" itemValue="id" itemLabel="name"/>
+                    <td><form:select path="role.name">
+                        <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
                     </form:select>
                     </td>
                 </tr>
                 <tr>
                     <td><form:input path="id" type="hidden" value="${user.id}"/></td>
-                    <td><form:input path="role.name" type="hidden" value="${user.role.name}"/></td>
                 </tr>
                 <br/>
                 <tr>

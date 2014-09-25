@@ -2,16 +2,34 @@ package io.leonid.springcash.web.user;
 
 import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Size;
 
 /**
  * Created by leonid on 22.09.14.
  */
 public class UserModel {
     private int id;
+
+    //TODO Add ocalized error messages @NotEmpty(message = "test")
+    @NotEmpty
+    @Size(min=3, max=30)
     private String login;
+
+    @NotEmpty
+    @Size(min=6, max=40)
     private String password;
+
+    @NotEmpty
+    @Size(min=6, max=40)
     private String confirmedPassword;
+
+    @Email
+    @NotEmpty
     private String email;
+
     private boolean isActive;
     private Role role;
     private String firstName;

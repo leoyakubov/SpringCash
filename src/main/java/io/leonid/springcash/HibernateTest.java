@@ -29,7 +29,20 @@ public class HibernateTest {
         SessionFactory factory = configuration.buildSessionFactory(builder.build());
         Session session = factory.openSession();
 
-       test3(session);
+        //addRoles(session);
+    }
+
+    private static void addRoles(Session session) {
+        Role role = new Role();
+        role.setName(Role.ROLE_ADMIN);
+        session.beginTransaction();
+        session.save(role);
+        session.getTransaction().commit();
+
+//        /*role.setName(Role.ROLE_USER);
+//        session.beginTransaction();
+//        session.save(role);
+//        session.getTransaction().commit();*/
     }
 
     private static void test3(Session session) {

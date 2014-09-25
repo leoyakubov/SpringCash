@@ -1,5 +1,6 @@
 package io.leonid.springcash.web.user;
 
+import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.IRoleService;
 import io.leonid.springcash.service.IUserService;
@@ -7,17 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -33,6 +37,9 @@ public class UserController {
     private IRoleService roleService;
 
     @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
     @Qualifier("userValidator")
     private UserValidator userValidator;
 
@@ -41,56 +48,81 @@ public class UserController {
         binder.setValidator(userValidator);
     }
 
+    @ModelAttribute("roleList")
+    public List<Role> roleList() {
+        return roleService.findAll();
+    }
+
+    @ModelAttribute("userList")
+    public List<User> userList() {
+        return userService.findAll();
+    }
+
     @RequestMapping("/user/list.htm")
     public String listUsers(Map<String, Object> map) {
         logger.info("UserController.listUsers called");
-        //map.put("user", new User());
-        map.put("userList", userService.findAll());
-        map.put("roleList", roleService.findAll());
 
         return "user/list";
     }
 
     @RequestMapping(value = "/user/add.htm", method = RequestMethod.GET)
     public String prepareAddUserForm(ModelMap modelMap) {
-        User user = new User();
-        modelMap.addAttribute("user", user);
-        modelMap.put("roleList", roleService.findAll());
+        UserModel userModel = new UserModel();
+        modelMap.addAttribute("userModel", userModel);
 
         return "user/add";
     }
 
     @RequestMapping(value = "/user/add.htm", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("user")
-                             User user, BindingResult result) {
+    public String addUser(@ModelAttribute("userModel")
+                              UserModel userModel, BindingResult result) {
+        userModel.setRole(roleService.findByName(userModel.getRole().getName()));
+
+        userValidator.validate(userModel,result);
+        if(result.hasErrors()) {
+            return "user/add";
+        }
+
+        User user = userModel.createUserFromModel();
         userService.insertOrUpdate(user);
 
         return "redirect:/user/list.htm";
     }
 
     @RequestMapping(value = "/user/edit.htm", method = RequestMethod.GET)
-    public String prepareEditUserForm(HttpServletRequest request, ModelMap modelMap) {
+    public String prepareEditUserForm(Locale locale, HttpServletRequest request, ModelMap modelMap,
+                                      final RedirectAttributes redirectAttributes) {
         String userId = request.getParameter("userId");
         User user = userService.findByID(Integer.parseInt(userId));
 
-        UserModel userModel = new UserModel(user);
+        if (user == null) {
+            final String errorMessage = messageSource.getMessage("valid.nosuchuser", null, locale);;
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
 
+            return "redirect:/user/list.htm";
+        }
+
+        UserModel userModel = new UserModel(user);
         modelMap.addAttribute("userModel", userModel);
-        modelMap.put("roleList", roleService.findAll());
 
         return "user/edit";
     }
 
     @RequestMapping(value = "/user/edit.htm", method = RequestMethod.POST)
-    public String editUser(@Validated @ModelAttribute("userModel")
-                                  UserModel userModel, BindingResult result) {
+    public String editUser(@ModelAttribute("userModel") UserModel userModel,
+                           BindingResult result, Locale locale,
+                           final RedirectAttributes redirectAttributes) {
+        userModel.setRole(roleService.findByName(userModel.getRole().getName()));
+
+        userValidator.validate(userModel,result);
         if(result.hasErrors()) {
             return "user/edit";
         }
 
-        userModel.setRole(roleService.findByID(userModel.getRole().getId()));
         User user = userModel.createUserFromModel();
         userService.insertOrUpdate(user);
+        final String successMessage = messageSource.getMessage("valid.usersavesuccess", null, locale);;
+        redirectAttributes.addFlashAttribute("successMessage", successMessage);
 
         return "redirect:/user/list.htm";
     }
