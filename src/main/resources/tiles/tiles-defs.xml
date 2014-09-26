@@ -39,4 +39,9 @@
         <put-attribute name="pageTitle" value="title.about"/>
         <put-attribute name="body"   value="/WEB-INF/pages/about.jsp"/>
     </definition>
+
+    <!--<definition name="login" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.login"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/login.jsp"/>
+    </definition>-->
 </tiles-definitions>

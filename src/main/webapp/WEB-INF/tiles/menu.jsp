@@ -8,9 +8,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <div class="menuPane">
     <ul class="mainMenu">
+        <!-- User section -->
+       <%-- <div class="user-data">
+            <sec:authorize access="isAuthenticated()">
+                <div class="user-i fright">
+                    <sec:authentication
+                            property="principal.username" />
+                    (<a href="/saasmanager/logout.htm">Logout</a>)
+                </div>
+                <div class="clear"></div>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+                <div class=" user-i fright">
+                    You are not logged in.(<a href="/saasmanager/login.htm">Login</a>)
+                </div>
+                <div class="clear"></div>
+            </sec:authorize>
+        </div>
+        <br/>--%>
+
+        <!-- Menu section -->
         <li><a href="<c:url value="/home.htm"/>"><spring:message code="title.home"/></a></li>
         <li><a href="<c:url value="/user/list.htm"/>"><spring:message code="title.users"/></a></li>
         <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
