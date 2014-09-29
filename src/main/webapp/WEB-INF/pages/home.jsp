@@ -14,5 +14,8 @@
 </head>
 <body>
     <h1>${welcomeMsg} Home</h1>
+    <c:if test="${not empty msg}">
+        <div class="msg">${msg}</div>
+    </c:if>
 </body>
 </html>

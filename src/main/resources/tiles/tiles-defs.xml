@@ -40,8 +40,18 @@
         <put-attribute name="body"   value="/WEB-INF/pages/about.jsp"/>
     </definition>
 
-    <!--<definition name="login" extends="baseLayout">
+    <definition name="login" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.login"/>
         <put-attribute name="body"   value="/WEB-INF/pages/login.jsp"/>
-    </definition>-->
+    </definition>
+
+    <definition name="admin/admin" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.admin"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/admin.jsp"/>
+    </definition>
+
+    <definition name="error403" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.login"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/error403.jsp"/>
+    </definition>
 </tiles-definitions>

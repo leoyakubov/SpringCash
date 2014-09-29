@@ -12,28 +12,35 @@
 
 <div class="menuPane">
     <ul class="mainMenu">
-        <!-- User section -->
-       <%-- <div class="user-data">
+       <!-- User section -->
+       <div class="user-data">
             <sec:authorize access="isAuthenticated()">
                 <div class="user-i fright">
-                    <sec:authentication
-                            property="principal.username" />
-                    (<a href="/saasmanager/logout.htm">Logout</a>)
+                    <sec:authentication property="principal.username" />
+                    <%--(<a href="<c:url value="/j_spring_security_logout"/>">Logout</a>)--%>
+
+                    <c:url var="logoutUrl" value="/j_spring_security_logout"/>
+                    <form action="${logoutUrl}" method="post">
+                        <input type="submit" value="Log out" />
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
                 </div>
                 <div class="clear"></div>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
                 <div class=" user-i fright">
-                    You are not logged in.(<a href="/saasmanager/login.htm">Login</a>)
+                    You are not logged in.(<a href="<c:url value="/login.htm"/>">Login</a>)
                 </div>
                 <div class="clear"></div>
             </sec:authorize>
-        </div>
-        <br/>--%>
+       </div>
+       <br/>
 
-        <!-- Menu section -->
-        <li><a href="<c:url value="/home.htm"/>"><spring:message code="title.home"/></a></li>
-        <li><a href="<c:url value="/user/list.htm"/>"><spring:message code="title.users"/></a></li>
-        <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
+
+       <!-- Menu section -->
+       <li><a href="<c:url value="/home.htm"/>"><spring:message code="title.home"/></a></li>
+       <li><a href="<c:url value="/user/list.htm"/>"><spring:message code="title.users"/></a></li>
+       <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
+       <li><a href="<c:url value="/admin.htm"/>"><spring:message code="title.admin"/></a></li>
     </ul>
 </div>

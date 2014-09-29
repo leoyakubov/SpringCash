@@ -8,27 +8,32 @@
       http://www.springframework.org/schema/beans 
       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <http use-expressions="true">
-        <intercept-url pattern="/login*" access="isAnonymous()" />
-        <intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />
-        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+    <http use-expressions="true" auto-config="true">
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+        <!--<intercept-url pattern="/login**" access="isAnonymous()" />
+        <intercept-url pattern="/**" access="isAnonymous()"/>-->
 
-       <form-login
-                login-page='/login.htm'
-                login-processing-url="/performLogin.htm"
-                default-target-url="/home.htm"
-                authentication-failure-url="/login.html?error=true"
-                always-use-default-target="true"/>
+        <!-- access denied page -->
+        <access-denied-handler error-page="/error403.htm" />
 
-       <logout logout-success-url="/login.htm" />
-       <!--<<remember-me key="uniqueAndSecret"/>-->
+        <form-login
+            login-page="/login.htm"
+            default-target-url="/home.htm"
+            authentication-failure-url="/login.htm?error=true"
+            username-parameter="j_username"
+            password-parameter="j_password"
+            always-use-default-target="false"/>
+
+        <logout logout-success-url="/login.htm?logout"/>
+        <!--<<remember-me key="uniqueAndSecret"/>-->
+        <csrf/>
+        <!--login-processing-url="/j_spring_security_check"-->
     </http>
 
-    <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="user1" password="user1" authorities="ROLE_USER" />
-            </user-service>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userService">
+            <password-encoder hash="plaintext" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
