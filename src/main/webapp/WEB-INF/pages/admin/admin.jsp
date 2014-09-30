@@ -18,8 +18,13 @@
         <h2>Admin page</h2>
         <c:if test="${pageContext.request.userPrincipal.name != null}">
             <h2>Welcome : ${pageContext.request.userPrincipal.name}
-                <%--| <a href="<c:url value="/j_spring_security_logout"/>" > Logout</a></h2>--%>
         </c:if>
-        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+        <sec:authorize access="isRememberMe()">
+            <h2># This user is login by "Remember Me Cookies".</h2>
+        </sec:authorize>
+
+        <sec:authorize access="isFullyAuthenticated()">
+            <h2># This user is login by username / password.</h2>
+        </sec:authorize>
     </body>
 </html>

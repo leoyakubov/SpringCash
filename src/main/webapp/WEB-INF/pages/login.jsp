@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
     <head></head>
@@ -17,14 +18,11 @@
             <h3>Login with Username and Password</h3>
 
             <c:if test="${not empty error}">
-                <div style="text-decoration-color: red" class="error">${error}</div>
-            </c:if>
-            <c:if test="${not empty msg}">
-                <div class="msg">${msg}</div>
+                <label style="color: red">${error}</label>
             </c:if>
 
             <form name='loginForm'
-                  action="<c:url value='/j_spring_security_check'/>" method='POST'>
+                  action="<c:url value='/auth/login_check?targetUrl=${targetUrl}'/>" method='POST'>
                 <table>
                     <tr>
                         <td>User:</td>
@@ -38,10 +36,13 @@
                         <td colspan='2'><input name="submit" type="submit" value="submit" />
                         </td>
                     </tr>
-                    <tr>
-                        <td>Remember Me:</td>
-                        <td><input type="checkbox" name="_spring_security_remember_me" /></td>
-                    </tr>
+                    <!-- if this is login for update, ignore remember me check -->
+                    <c:if test="${empty loginUpdate}">
+                        <tr>
+                            <td></td>
+                            <td>Remember Me: <input type="checkbox" name="remember-me" /></td>
+                        </tr>
+                    </c:if>
                 </table>
 
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

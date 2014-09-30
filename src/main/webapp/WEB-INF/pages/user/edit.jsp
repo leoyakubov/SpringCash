@@ -21,7 +21,7 @@
             <table>
                 <tr>
                     <td><form:label path="login"><spring:message code="label.login"/></form:label></td>
-                    <td><form:input path="login" /></td>
+                    <td><form:input path="login" readonly="true"/></td>
                     <td><form:errors path="login" cssStyle="color: #ff0000;"/></td>
                 </tr>
                 <tr>

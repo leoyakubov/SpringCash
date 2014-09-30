@@ -33,6 +33,10 @@ public class UserService extends GenericService<User> implements IUserService, U
     @Transactional
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
         io.leonid.springcash.model.User user = userDAO.findByLogin(login);
+        if (user == null) {
+            throw new UsernameNotFoundException(login);
+        }
+
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
 
