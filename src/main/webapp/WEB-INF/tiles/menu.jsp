@@ -18,12 +18,18 @@
                 <div class="user-i fright">
                     <sec:authentication property="principal.username" />
                     <%--(<a href="<c:url value="/j_spring_security_logout"/>">Logout</a>)--%>
+                    <a href="javascript:formSubmit()"> Logout</a>
 
-                    <c:url var="logoutUrl" value="/j_spring_security_logout"/>
-                    <form action="${logoutUrl}" method="post">
-                        <input type="submit" value="Log out" />
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <c:url value="/j_spring_security_logout" var="logoutUrl" />
+                    <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}"
+                               value="${_csrf.token}" />
                     </form>
+                    <script>
+                        function formSubmit() {
+                            document.getElementById("logoutForm").submit();
+                        }
+                    </script>
                 </div>
                 <div class="clear"></div>
             </sec:authorize>
@@ -42,5 +48,6 @@
        <li><a href="<c:url value="/user/list.htm"/>"><spring:message code="title.users"/></a></li>
        <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
        <li><a href="<c:url value="/admin.htm"/>"><spring:message code="title.admin"/></a></li>
+       <li><a href="<c:url value="/update.htm"/>">Update</a></li>
     </ul>
 </div>

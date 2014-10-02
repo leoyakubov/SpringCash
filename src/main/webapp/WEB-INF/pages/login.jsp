@@ -13,7 +13,7 @@
 
 <html>
     <head></head>
-    <body onload='document.loginForm.username.focus();'>
+    <body onload='document.loginForm.j_username.focus();'>
         <div id="login-box">
             <h3>Login with Username and Password</h3>
 

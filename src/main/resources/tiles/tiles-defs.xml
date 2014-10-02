@@ -50,6 +50,11 @@
         <put-attribute name="body"   value="/WEB-INF/pages/admin/admin.jsp"/>
     </definition>
 
+    <definition name="admin/update" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.admin"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/update.jsp"/>
+    </definition>
+
     <definition name="error403" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.login"/>
         <put-attribute name="body"   value="/WEB-INF/pages/error403.jsp"/>

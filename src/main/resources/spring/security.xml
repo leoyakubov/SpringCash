@@ -9,7 +9,9 @@
       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
     <http use-expressions="true" auto-config="true">
-        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+        <!-- redirect to 403 access denied -->
+        <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/login**" access="isAnonymous()" />
         <intercept-url pattern="/**" access="isAnonymous()"/>-->
 
@@ -26,7 +28,7 @@
             always-use-default-target="false"
             authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler"/>
 
-        <logout logout-success-url="/login.htm?logout" delete-cookies="JSESSIONID"/>
+        <logout logout-success-url="/home.htm?logout" delete-cookies="JSESSIONID"/>
         <csrf/>
 
         <!-- enable remember me -->
@@ -39,7 +41,12 @@
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="userService">
-            <password-encoder hash="plaintext" />
+            <password-encoder ref="encoder" />
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
 </beans:beans>
