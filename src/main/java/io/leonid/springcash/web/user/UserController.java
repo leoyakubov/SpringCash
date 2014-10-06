@@ -4,19 +4,20 @@ import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.IRoleService;
 import io.leonid.springcash.service.IUserService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,11 @@ public class UserController {
             return "user/add";
         }
 
+        //Encode plain text password into bcrypt hash
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        //userModel.setConfirmedPassword(passwordEncoder.encode(userModel.getConfirmedPassword()));
+
         User user = userModel.createUserFromModel();
         userService.insertOrUpdate(user);
 
@@ -114,7 +120,7 @@ public class UserController {
                            final RedirectAttributes redirectAttributes) {
         userModel.setRole(roleService.findByName(userModel.getRole().getName()));
 
-        userValidator.validate(userModel,result);
+        userValidator.validate(userModel, result);
         if(result.hasErrors()) {
             return "user/edit";
         }
@@ -135,4 +141,13 @@ public class UserController {
 
         return "redirect:/user/list.htm";
     }
+
+    /*@ExceptionHandler({ConstraintViolationException.class})
+    public String handleException(Exception ex) {
+        ModelAndView model = new ModelAndView("SQLException");
+
+        model.addObject("exception", ex.getMessage());
+
+        return model;
+    }*/
 }

@@ -10,7 +10,7 @@
 
     <http use-expressions="true" auto-config="true">
         <!-- redirect to 403 access denied -->
-        <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
+        <intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/login**" access="isAnonymous()" />
         <intercept-url pattern="/**" access="isAnonymous()"/>-->

@@ -30,7 +30,7 @@ public class UserModel {
     @NotEmpty
     private String email;
 
-    private boolean isActive;
+    private boolean isActive = false;
     private Role role;
     private String firstName;
     private String lastName;
