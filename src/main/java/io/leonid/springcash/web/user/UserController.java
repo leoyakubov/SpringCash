@@ -138,13 +138,4 @@ public class UserController {
 
         return "redirect:/user/list.htm";
     }
-
-    /*@ExceptionHandler({ConstraintViolationException.class})
-    public String handleException(Exception ex) {
-        ModelAndView model = new ModelAndView("SQLException");
-
-        model.addObject("exception", ex.getMessage());
-
-        return model;
-    }*/
 }

@@ -10,7 +10,8 @@
 
     <http use-expressions="true" auto-config="true">
         <!-- redirect to 403 access denied -->
-        <intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>
+        <intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN')"/>
+        <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/login**" access="isAnonymous()" />
         <intercept-url pattern="/**" access="isAnonymous()"/>-->
@@ -37,7 +38,6 @@
                 remember-me-parameter="remember-me"
                 data-source-ref="dataSource" user-service-ref="userService"/>
     </http>
-
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="userService">

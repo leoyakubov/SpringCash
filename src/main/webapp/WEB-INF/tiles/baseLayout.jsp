@@ -12,24 +12,24 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <!-- Set page title as "SpringCash - <page title>" -->
-    <c:set var="titleKey">
-        <tiles:insertAttribute name="pageTitle" ignore="true"/>
-    </c:set>
-    <title><spring:message code="title.apptitle"/> - <spring:message code="${titleKey}"/></title>
+    <head>
+        <!-- Set page title as "SpringCash - <page title>" -->
+        <c:set var="titleKey">
+            <tiles:insertAttribute name="pageTitle" ignore="true"/>
+        </c:set>
+        <title><spring:message code="title.apptitle"/> - <spring:message code="${titleKey}"/></title>
 
-    <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/static/css/tiles.css"/>"/>
-</head>
-<body>
-<tiles:insertAttribute name="header"/>
-<div class="main">
-    <tiles:insertAttribute name="menu"/>
-    <div class="bodyPane">
-        <tiles:insertAttribute name="body"/>
+        <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/static/css/tiles.css"/>"/>
+    </head>
+    <body>
+    <tiles:insertAttribute name="header"/>
+    <div class="main">
+        <tiles:insertAttribute name="menu"/>
+        <div class="bodyPane">
+            <tiles:insertAttribute name="body"/>
+        </div>
     </div>
-</div>
-<tiles:insertAttribute name="footer"/>
+    <tiles:insertAttribute name="footer"/>
 
-</body>
+    </body>
 </html>
