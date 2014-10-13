@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
  * Created by leonid on 13.08.14.
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User extends BaseEntity{
     @Column(name = "login", nullable = false, unique = true)
     @NotEmpty
@@ -27,17 +27,17 @@ public class User extends BaseEntity{
     @NotEmpty
     private String email;
 
-    @Column(name = "isActive", nullable = false, unique = false)
+    @Column(name = "is_active", nullable = false, unique = false)
     private boolean isActive = true;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "firstName", nullable = false, unique = false)
+    @Column(name = "first_name", nullable = false, unique = false)
     private String firstName;
 
-    @Column(name = "lastName", nullable = false, unique = false)
+    @Column(name = "last_name", nullable = false, unique = false)
     private String lastName;
 
     public String getLogin() {

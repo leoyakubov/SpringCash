@@ -5,6 +5,7 @@ import io.leonid.springcash.model.User;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -13,26 +14,29 @@ import javax.validation.constraints.Size;
 public class UserModel {
     private int id;
 
-    //TODO Add ocalized error messages @NotEmpty(message = "test")
-    @NotEmpty
-    @Size(min=3, max=30)
+    @NotNull
+    @Size(min=3, max=30, message = "{valid.loginsize}")
     private String login;
 
-    @NotEmpty
-    @Size(min=6, max=40)
+    @NotNull
+    @Size(min=6, max=60, message = "{valid.passwordsize}")
     private String password;
 
-    @NotEmpty
-    @Size(min=6, max=40)
+    @NotNull
+    @Size(min=6, max=60, message = "{valid.passwordsize}")
     private String confirmedPassword;
 
-    @Email
-    @NotEmpty
+    @NotEmpty(message = "{valid.email}")
+    @Email(message = "{valid.emailsize}")
     private String email;
 
-    private boolean isActive = false;
+    private boolean isActive = true;
+
+    @NotNull(message = "{valid.roleselect}")
     private Role role;
+
     private String firstName;
+
     private String lastName;
 
     public UserModel() {}
@@ -49,7 +53,7 @@ public class UserModel {
         this.lastName = user.getLastName();
     }
 
-    public User createUserFromModel() {
+    public User constructUserFromModel() {
         User user = new User();
         user.setId(this.id);
         user.setLogin(this.login);

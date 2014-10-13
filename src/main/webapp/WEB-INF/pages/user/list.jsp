@@ -6,9 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 <head>
@@ -40,15 +40,14 @@
 
             <c:forEach items="${userList}" var="user">
                 <tr>
-                    <td>${user.lastName}, ${user.firstName} </td>
+                    <td>${user.firstName}, ${user.lastName}</td>
                     <td>${user.login}</td>
                     <td>${user.email}</td>
                     <td>${user.active}</td>
                     <td>${user.role.name}</td>
                     <td><a href="/user/edit.htm?userId=${user.id}"><spring:message code="label.edituser"/></a></td>
-                    <%--<td><a href="/user/edit.htm?userId=1024">edit</a></td>--%>
                     <td><form:errors path="user" cssStyle="color: #ff0000;"/></td>
-                    <td><a href="#" onclick='javascript:deleteItem("${user.id}")'>delete</a></td>
+                    <td><a href="#" onclick='javascript:deleteItem("${user.id}")'><spring:message code="label.deleteuser"/></a></td>
                 </tr>
             </c:forEach>
         </table>

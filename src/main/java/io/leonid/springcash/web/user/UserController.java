@@ -4,7 +4,6 @@ import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.IRoleService;
 import io.leonid.springcash.service.IUserService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,9 +85,8 @@ public class UserController {
         //Encode plain text password into bcrypt hash
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        //userModel.setConfirmedPassword(passwordEncoder.encode(userModel.getConfirmedPassword()));
 
-        User user = userModel.createUserFromModel();
+        User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
 
         return "redirect:/user/list.htm";
@@ -125,7 +122,7 @@ public class UserController {
             return "user/edit";
         }
 
-        User user = userModel.createUserFromModel();
+        User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
         final String successMessage = messageSource.getMessage("valid.usersavesuccess", null, locale);;
         redirectAttributes.addFlashAttribute("successMessage", successMessage);

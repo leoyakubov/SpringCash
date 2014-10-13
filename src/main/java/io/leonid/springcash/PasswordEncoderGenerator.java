@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class PasswordEncoderGenerator {
     public static void main(String[] args) {
-        String rawPass = "user12";
+        String rawPass = "apple";
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPass = passwordEncoder.encode(rawPass);
 

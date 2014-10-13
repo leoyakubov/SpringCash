@@ -29,7 +29,7 @@
                     <td><form:errors path="password" cssStyle="color: #ff0000;"/></td>
                 </tr>
                 <tr>
-                    <td><form:label path="confirmedPassword"><spring:message code="label.confirmedpassword"/></form:label></td>
+                    <td><form:label path="confirmedPassword"><spring:message code="label.confirmpassword"/></form:label></td>
                     <td><form:password path="confirmedPassword" showPassword="false"/></td>
                     <td><form:errors path="confirmedPassword" cssStyle="color: #ff0000;"/></td>
                 </tr>
