@@ -95,8 +95,8 @@ public class UserController {
     @RequestMapping(value = "/user/edit.htm", method = RequestMethod.GET)
     public String prepareEditUserForm(Locale locale, HttpServletRequest request, ModelMap modelMap,
                                       final RedirectAttributes redirectAttributes) {
-        String userId = request.getParameter("userId");
-        User user = userService.findByID(Integer.parseInt(userId));
+        String userLogin = request.getParameter("user");
+        User user = userService.findByLogin(userLogin);
 
         if (user == null) {
             final String errorMessage = messageSource.getMessage("valid.nosuchuser", null, locale);;

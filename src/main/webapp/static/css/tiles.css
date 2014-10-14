@@ -7,7 +7,7 @@ body {
 }
 
 .header,.main,.footer {
-    width: 960px;
+    width: 1000px;
     color: #665544;
     margin: 0px auto;
     clear: both;
@@ -17,6 +17,7 @@ body {
     float: left;
     margin: 10px;
     min-height: 400px;
+    min-width: 120px;
 }
 
 .menuPane {

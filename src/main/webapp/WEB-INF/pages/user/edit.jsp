@@ -6,9 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <html>
     <head>
@@ -39,6 +40,7 @@
                         <td><form:input path="lastName" /></td>
                         <td><form:errors path="lastName" cssStyle="color: #ff0000;"/></td>
                     </tr>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <tr>
                         <td><form:label path="active"><spring:message code="label.isactive"/></form:label></td>
                         <td><form:checkbox path="active" /></td>
@@ -50,6 +52,7 @@
                         </form:select>
                         </td>
                     </tr>
+                    </sec:authorize>
                     <tr>
                         <td><form:input path="id" type="hidden" value="${user.id}"/></td>
                     </tr>

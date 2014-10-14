@@ -13,6 +13,8 @@
         <intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/user/list**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/user/**" access="isAuthenticated()"/>
         <!--<intercept-url pattern="/login**" access="isAnonymous()" />
         <intercept-url pattern="/**" access="isAnonymous()"/>-->
 

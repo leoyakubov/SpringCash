@@ -16,15 +16,18 @@
        <div class="user-data">
             <sec:authorize access="isAuthenticated()">
                 <div class="user-i fright">
+                    <span>User: </span>
                     <sec:authentication property="principal.username"/>
-                    <a href="javascript:formSubmit()"> Logout</a>
+                    <sec:authentication var="userLogin" property="principal.username" />
+                    <div><a href="<c:url value="/user/edit.htm?user=${userLogin}"/>">Edit profile</a></div>
+                    <div><a href="javascript:logout()">Logout</a></div>
                     <c:url var="logoutUrl" value="/j_spring_security_logout"/>
                     <form action="${logoutUrl}" method="post" id="logoutForm">
                         <input type="hidden" name="${_csrf.parameterName}"
                                value="${_csrf.token}" />
                     </form>
                     <script>
-                        function formSubmit() {
+                        function logout() {
                             document.getElementById("logoutForm").submit();
                         }
                     </script>
