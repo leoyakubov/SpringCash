@@ -16,6 +16,7 @@
     </head>
     <body>
         <h2>Admin page</h2>
+        <div>---Links for admin---</div>
         <c:if test="${pageContext.request.userPrincipal.name != null}">
             <h2>Welcome : ${pageContext.request.userPrincipal.name}
         </c:if>

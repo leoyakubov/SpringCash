@@ -17,6 +17,9 @@
     </head>
     <body>
         <h2>Edit user</h2>
+        <c:if test="${not empty successMsg}">
+            <label style="color: green">${successMsg}</label>
+        </c:if>
         <c:if  test="${!empty userModel}">
             <form:form method="post" action="edit.htm" commandName="userModel">
                 <table>
@@ -41,17 +44,20 @@
                         <td><form:errors path="lastName" cssStyle="color: #ff0000;"/></td>
                     </tr>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <tr>
-                        <td><form:label path="active"><spring:message code="label.isactive"/></form:label></td>
-                        <td><form:checkbox path="active" /></td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="role"><spring:message code="label.role"/></form:label></td>
-                        <td><form:select path="role.name">
-                            <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
-                        </form:select>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><form:label path="active"><spring:message code="label.isactive"/></form:label></td>
+                            <td><form:checkbox path="active" /></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="role"><spring:message code="label.role"/></form:label></td>
+                            <td><form:select path="role.name">
+                                <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
+                            </form:select>
+                            </td>
+                        </tr>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_USER')">
+                        <td><form:input path="role.name" type="hidden" value="${user.role.name}"/></td>
                     </sec:authorize>
                     <tr>
                         <td><form:input path="id" type="hidden" value="${user.id}"/></td>
@@ -62,7 +68,7 @@
                             <input type="submit" value="<spring:message code="label.save"/>"/>
                         </td>
                         <td colspan="2">
-                            <input type="button" value="<spring:message code="label.cancel"/>" onclick="location.href='list.htm'"/>
+                            <input type="reset" value="<spring:message code="label.reset"/>" <%--onclick="location.href='list.htm'"--%>/>
                         </td>
                     </tr>
                 </table>

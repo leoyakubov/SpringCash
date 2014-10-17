@@ -12,19 +12,19 @@
 
 <div class="menuPane">
     <ul class="mainMenu">
-       <!-- User section -->
-       <div class="user-data">
+        <!-- User section -->
+        <div class="user-data">
             <sec:authorize access="isAuthenticated()">
                 <div class="user-i fright">
                     <span>User: </span>
                     <sec:authentication property="principal.username"/>
-                    <sec:authentication var="userLogin" property="principal.username" />
-                    <div><a href="<c:url value="/user/edit.htm?user=${userLogin}"/>">Edit profile</a></div>
+                    <sec:authentication var="userLogin" property="principal.username"/>
+                    <div><a href="<c:url value="/user/edit.htm"/>">Edit profile</a></div>
                     <div><a href="javascript:logout()">Logout</a></div>
                     <c:url var="logoutUrl" value="/j_spring_security_logout"/>
                     <form action="${logoutUrl}" method="post" id="logoutForm">
                         <input type="hidden" name="${_csrf.parameterName}"
-                               value="${_csrf.token}" />
+                               value="${_csrf.token}"/>
                     </form>
                     <script>
                         function logout() {
@@ -40,16 +40,16 @@
                 </div>
                 <div class="clear"></div>
             </sec:authorize>
-       </div>
-       <br/>
+        </div>
+        <br/>
 
-       <!-- Menu section -->
-       <li><a href="<c:url value="/home.htm"/>"><spring:message code="title.home"/></a></li>
-       <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <li><a href="<c:url value="/user/list.htm"/>"><spring:message code="title.users"/></a></li>
-       </sec:authorize>
-       <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
-       <li><a href="<c:url value="/admin.htm"/>"><spring:message code="title.admin"/></a></li>
-       <li><a href="<c:url value="/update.htm"/>">Update</a></li>
+        <!-- Menu section -->
+        <li><a href="<c:url value="/home.htm"/>"><spring:message code="title.home"/></a></li>
+        <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
+        <br/>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <li><a href="<c:url value="/admin.htm"/>"><spring:message code="title.admin"/></a></li>
+            <li><a href="<c:url value="/users.htm"/>"><spring:message code="title.users"/></a></li>
+        </sec:authorize>
     </ul>
 </div>

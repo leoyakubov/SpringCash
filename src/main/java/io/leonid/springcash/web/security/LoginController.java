@@ -49,13 +49,6 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/admin.htm", method = RequestMethod.GET)
-    public String adminPage(final ModelMap map) {
-        logger.info("Admin page controller");
-
-        return "admin/admin";
-    }
-
     @RequestMapping(value = "/error403.htm", method = RequestMethod.GET)
     public String accesssDenied(final ModelMap map) {
         //check if user is login
@@ -68,52 +61,6 @@ public class LoginController {
         logger.error("Access denied for user {}", map.get("username"));
 
         return "error403";
-    }
-
-    /**
-     * This update page is for user login with password only.
-     * If user is login via remember me cookie, send login to ask for password again.
-     * To avoid stolen remember me cookie to update info
-     */
-    @RequestMapping(value = "/update.htm", method = RequestMethod.GET)
-    public String updatePage(final ModelMap map, HttpServletRequest request) {
-        String view = "";
-
-        if (isRememberMeAuthenticated()) {
-            //send login for update
-            setRememberMeTargetUrlToSession(request);
-            map.addAttribute("loginUpdate", true);
-            view = "login";
-
-        } else {
-            view = "admin/update";
-        }
-
-        return view;
-    }
-
-    /**
-     * Check if user is login by remember me cookie, refer
-     * org.springframework.security.authentication.AuthenticationTrustResolverImpl
-     */
-    private boolean isRememberMeAuthenticated() {
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            return false;
-        }
-
-        return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
-    }
-
-    /**
-     * save targetURL in session
-     */
-    private void setRememberMeTargetUrlToSession(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session!=null){
-            session.setAttribute("targetUrl", "/update.htm");
-        }
     }
 
     /**

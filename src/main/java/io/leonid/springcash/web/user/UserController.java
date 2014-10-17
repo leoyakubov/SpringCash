@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,13 +61,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping("/user/list.htm")
-    public String listUsers(Map<String, Object> map) {
-        logger.info("UserController.listUsers called");
-
-        return "user/list";
-    }
-
     @RequestMapping(value = "/user/add.htm", method = RequestMethod.GET)
     public String prepareAddUserForm(ModelMap modelMap) {
         UserModel userModel = new UserModel();
@@ -92,23 +89,41 @@ public class UserController {
         return "redirect:/user/list.htm";
     }
 
+    /**
+     * This edit page is for user login with password only.
+     * If user is login via remember me cookie, send login to ask for password again.
+     * To avoid stolen remember me cookie to update info
+     */
     @RequestMapping(value = "/user/edit.htm", method = RequestMethod.GET)
     public String prepareEditUserForm(Locale locale, HttpServletRequest request, ModelMap modelMap,
                                       final RedirectAttributes redirectAttributes) {
-        String userLogin = request.getParameter("user");
-        User user = userService.findByLogin(userLogin);
+        String view = "";
 
-        if (user == null) {
-            final String errorMessage = messageSource.getMessage("valid.nosuchuser", null, locale);;
-            redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+        if (isRememberMeAuthenticated()) {
+            //send login for update
+            setRememberMeTargetUrlToSession(request);
+            modelMap.addAttribute("loginUpdate", true);
+            view = "login";
 
-            return "redirect:/user/list.htm";
+        } else {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String userLogin = auth.getName(); //get logged in username
+            User user = userService.findByLogin(userLogin);
+
+            if (user == null) {
+                final String errorMessage = messageSource.getMessage("valid.nosuchuser", null, locale);;
+                redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+
+                return "redirect:/user/list.htm";
+            }
+
+            UserModel userModel = new UserModel(user);
+            modelMap.addAttribute("userModel", userModel);
+
+            view = "user/edit";
         }
 
-        UserModel userModel = new UserModel(user);
-        modelMap.addAttribute("userModel", userModel);
-
-        return "user/edit";
+        return view;
     }
 
     @RequestMapping(value = "/user/edit.htm", method = RequestMethod.POST)
@@ -124,10 +139,11 @@ public class UserController {
 
         User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
-        final String successMessage = messageSource.getMessage("valid.usersavesuccess", null, locale);;
-        redirectAttributes.addFlashAttribute("successMessage", successMessage);
 
-        return "redirect:/user/list.htm";
+        final String successMessage = messageSource.getMessage("valid.usersavesuccess", null, locale);
+        redirectAttributes.addFlashAttribute("successMsg", successMessage);
+
+        return "redirect:/user/edit.htm";
     }
 
     @RequestMapping("/user/delete.htm")
@@ -137,5 +153,29 @@ public class UserController {
         userService.delete(user);
 
         return "redirect:/user/list.htm";
+    }
+
+    /**
+     * Check if user is login by remember me cookie, refer
+     * org.springframework.security.authentication.AuthenticationTrustResolverImpl
+     */
+    private boolean isRememberMeAuthenticated() {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+
+        return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+    }
+
+    /**
+     * save targetURL in session
+     */
+    private void setRememberMeTargetUrlToSession(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session!=null){
+            session.setAttribute("targetUrl", "/user/edit.htm");
+        }
     }
 }

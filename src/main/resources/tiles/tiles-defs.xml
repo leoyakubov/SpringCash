@@ -13,16 +13,15 @@
         <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
     </definition>
 
-
     <!-- Pages-->
     <definition name="home" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.home"/>
         <put-attribute name="body"   value="/WEB-INF/pages/home.jsp"/>
     </definition>
 
-    <definition name="user/list" extends="baseLayout">
-        <put-attribute name="pageTitle" value="title.users"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/user/list.jsp"/>
+    <definition name="about" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.about"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/about.jsp"/>
     </definition>
 
     <definition name="user/add" extends="baseLayout">
@@ -35,24 +34,19 @@
         <put-attribute name="body"   value="/WEB-INF/pages/user/edit.jsp"/>
     </definition>
 
-    <definition name="about" extends="baseLayout">
-        <put-attribute name="pageTitle" value="title.about"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/about.jsp"/>
-    </definition>
-
-    <definition name="login" extends="baseLayout">
-        <put-attribute name="pageTitle" value="title.login"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/login.jsp"/>
-    </definition>
-
     <definition name="admin/admin" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.admin"/>
         <put-attribute name="body"   value="/WEB-INF/pages/admin/admin.jsp"/>
     </definition>
 
-    <definition name="admin/update" extends="baseLayout">
-        <put-attribute name="pageTitle" value="title.admin"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/admin/update.jsp"/>
+    <definition name="admin/users" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.users"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/users.jsp"/>
+    </definition>
+
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.login"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/login.jsp"/>
     </definition>
 
     <definition name="error403" extends="baseLayout">

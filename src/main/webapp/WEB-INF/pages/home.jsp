@@ -18,5 +18,8 @@
     <c:if test="${not empty msg}">
         <label style="color: green">${msg}</label>
     </c:if>
+    <c:if test="${not empty successMsg}">
+        <label style="color: green">${successMsg}</label>
+    </c:if>
 </body>
 </html>
