@@ -3,7 +3,7 @@ package io.leonid.springcash.web.user;
 import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,25 +14,25 @@ import javax.validation.constraints.Size;
 public class UserModel {
     private int id;
 
-    @NotNull
-    @Size(min=3, max=30, message = "{valid.loginsize}")
+    @NotBlank(message = "{valid.login.notempty}")
+    @Size(min=3, max=30, message = "{valid.login.size}")
     private String login;
 
-    @NotNull
-    @Size(min=6, max=60, message = "{valid.passwordsize}")
+    @NotBlank(message = "{valid.password.notempty}")
+    @Size(min=6, max=60, message = "{valid.password.size}")
     private String password;
 
-    @NotNull
-    @Size(min=6, max=60, message = "{valid.passwordsize}")
+    @NotBlank(message = "{valid.password.conf.notempty}")
+    @Size(min=6, max=60, message = "{valid.password.size}")
     private String confirmedPassword;
 
-    @NotEmpty(message = "{valid.email}")
-    @Email(message = "{valid.emailsize}")
+    @NotBlank(message = "{valid.email.notempty}")
+    @Email(message = "{valid.email.size}")
     private String email;
 
     private boolean isActive = true;
 
-    @NotNull(message = "{valid.roleselect}")
+    @NotNull(message = "{valid.role.select}")
     private Role role;
 
     private String firstName;

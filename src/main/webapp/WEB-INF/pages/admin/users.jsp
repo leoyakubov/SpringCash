@@ -14,7 +14,7 @@
     <head>
         <script type="text/javascript">
             function deleteItem(id) {
-                var url = "/user/delete.htm?userId=" + id;
+                var url = "/deleteUser.htm?userId=" + id;
                 var OK = confirm('Delete this user?');
                 if (OK) {
                     window.location = url;
@@ -33,7 +33,7 @@
             <label style="color: green">${successMsg}</label>
         </c:if>
 
-        <form:form method="get" action="/user/add.htm" commandName="user">
+        <form:form method="get" action="/addUser.htm" commandName="user">
             <input type="submit" value="<spring:message code="label.adduser"/>"/>
         </form:form>
 

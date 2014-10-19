@@ -38,6 +38,9 @@
                 <div class=" user-i fright">
                     You are not logged in.(<a href="<c:url value="/login.htm"/>">Login</a>)
                 </div>
+                <div class=" user-i fright">
+                    Don't have an account?.(<a href="<c:url value="/signup.htm"/>">Sign Up</a>)
+                </div>
                 <div class="clear"></div>
             </sec:authorize>
         </div>

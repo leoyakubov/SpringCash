@@ -12,6 +12,7 @@ import javax.persistence.Table;
 public class Role extends BaseEntity{
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
+    public static final String ROLE_DEMO = "DEMO";
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;

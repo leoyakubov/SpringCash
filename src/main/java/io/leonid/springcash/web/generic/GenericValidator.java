@@ -1,4 +1,4 @@
-package io.leonid.springcash.web;
+package io.leonid.springcash.web.generic;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.validation.Errors;

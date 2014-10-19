@@ -25,7 +25,7 @@
                 <table>
                     <tr>
                         <td><form:label path="login"><spring:message code="label.login"/></form:label></td>
-                        <td><form:input path="login" readonly="true"/></td>
+                        <td><form:label path="login">${userModel.login}</form:label></td>
                         <td><form:errors path="login" cssStyle="color: #ff0000;"/></td>
                     </tr>
                     <tr>
@@ -43,24 +43,10 @@
                         <td><form:input path="lastName" /></td>
                         <td><form:errors path="lastName" cssStyle="color: #ff0000;"/></td>
                     </tr>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <tr>
-                            <td><form:label path="active"><spring:message code="label.isactive"/></form:label></td>
-                            <td><form:checkbox path="active" /></td>
-                        </tr>
-                        <tr>
-                            <td><form:label path="role"><spring:message code="label.role"/></form:label></td>
-                            <td><form:select path="role.name">
-                                <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
-                            </form:select>
-                            </td>
-                        </tr>
-                    </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_USER')">
-                        <td><form:input path="role.name" type="hidden" value="${user.role.name}"/></td>
-                    </sec:authorize>
                     <tr>
                         <td><form:input path="id" type="hidden" value="${user.id}"/></td>
+                        <td><form:input path="login" type="hidden" value="${user.login}"/></td>
+                        <td><form:input path="role.id" type="hidden" value="${user.role.id}"/></td>
                     </tr>
                     <br/>
                     <tr>

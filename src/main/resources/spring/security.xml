@@ -11,11 +11,11 @@
     <http use-expressions="true" auto-config="true">
         <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
         <!-- redirect to 403 access denied -->
-        <intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/user/list**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user/**" access="isAuthenticated()"/>
-        <!--<intercept-url pattern="/login**" access="isAnonymous()" /> -->
+        <intercept-url pattern="/login**" access="isAnonymous()" />
+        <intercept-url pattern="/signup**" access="isAnonymous()" />
         <intercept-url pattern="/**" access="permitAll"/>
 
         <!-- access denied page -->
@@ -23,7 +23,7 @@
 
         <form-login
             login-page="/login.htm"
-            default-target-url="/home.htm"
+            default-target-url="/redirect.htm"
             login-processing-url="/auth/login_check"
             authentication-failure-url="/login.htm?error=true"
             username-parameter="j_username"

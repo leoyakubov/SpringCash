@@ -3,7 +3,7 @@ package io.leonid.springcash.web.user;
 
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.IUserService;
-import io.leonid.springcash.web.GenericValidator;
+import io.leonid.springcash.web.generic.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -32,12 +32,12 @@ public class UserValidator extends GenericValidator implements Validator {
 
         if (isAdded) {
            if (!model.getPassword().equals(model.getConfirmedPassword())) {
-                errors.rejectValue("confirmedPassword", "valid.passwordconfdiff");
+                errors.rejectValue("confirmedPassword", "valid.password.conf.diff");
            }
 
            //Check if the user's login is unique (on add new one)
            if (user != null) {
-                errors.rejectValue("login", "valid.userloginnotunique");
+                errors.rejectValue("login", "valid.login.notunique");
            }
         }
         else { //Is edited

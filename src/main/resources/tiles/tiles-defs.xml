@@ -44,13 +44,23 @@
         <put-attribute name="body"   value="/WEB-INF/pages/admin/users.jsp"/>
     </definition>
 
-    <definition name="login" extends="baseLayout">
-        <put-attribute name="pageTitle" value="title.login"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/login.jsp"/>
+    <definition name="admin/addUser" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.users"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/addUser.jsp"/>
     </definition>
 
-    <definition name="error403" extends="baseLayout">
+    <definition name="security/login" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.login"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/error403.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/security/login.jsp"/>
+    </definition>
+
+    <definition name="security/signup" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.login"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/security/signup.jsp"/>
+    </definition>
+
+    <definition name="security/error403" extends="baseLayout">
+        <put-attribute name="pageTitle" value="title.login"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/security/error403.jsp"/>
     </definition>
 </tiles-definitions>

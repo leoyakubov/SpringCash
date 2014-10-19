@@ -4,43 +4,40 @@ import io.leonid.springcash.model.Role;
 import io.leonid.springcash.model.User;
 import io.leonid.springcash.service.IRoleService;
 import io.leonid.springcash.service.IUserService;
+import io.leonid.springcash.web.generic.GenericController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by leonid on 14.08.14.
  */
 @Controller
-public class UserController {
+public class UserController extends GenericController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private IUserService userService;
     @Autowired
     private IRoleService roleService;
-
-    @Autowired
-    private MessageSource messageSource;
 
     @Autowired
     @Qualifier("userValidator")
@@ -61,33 +58,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/user/add.htm", method = RequestMethod.GET)
-    public String prepareAddUserForm(ModelMap modelMap) {
-        UserModel userModel = new UserModel();
-        modelMap.addAttribute("userModel", userModel);
-
-        return "user/add";
-    }
-
-    @RequestMapping(value = "/user/add.htm", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("userModel")
-                              UserModel userModel, BindingResult result) {
-        userModel.setRole(roleService.findByName(userModel.getRole().getName()));
-
-        userValidator.validate(userModel,result);
-        if(result.hasErrors()) {
-            return "user/add";
-        }
-
-        //Encode plain text password into bcrypt hash
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-
-        User user = userModel.constructUserFromModel();
-        userService.insertOrUpdate(user);
-
-        return "redirect:/user/list.htm";
-    }
 
     /**
      * This edit page is for user login with password only.
@@ -103,7 +73,7 @@ public class UserController {
             //send login for update
             setRememberMeTargetUrlToSession(request);
             modelMap.addAttribute("loginUpdate", true);
-            view = "login";
+            view = "security/login";
 
         } else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,10 +81,9 @@ public class UserController {
             User user = userService.findByLogin(userLogin);
 
             if (user == null) {
-                final String errorMessage = messageSource.getMessage("valid.nosuchuser", null, locale);;
-                redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+                putRedirectMessage(ERROR_MSG, "msg.nosuchuser", locale, redirectAttributes);
 
-                return "redirect:/user/list.htm";
+                return "redirect:/home.htm";
             }
 
             UserModel userModel = new UserModel(user);
@@ -130,7 +99,7 @@ public class UserController {
     public String editUser(@ModelAttribute("userModel") UserModel userModel,
                            BindingResult result, Locale locale,
                            final RedirectAttributes redirectAttributes) {
-        userModel.setRole(roleService.findByName(userModel.getRole().getName()));
+        userModel.setRole(roleService.findByID(userModel.getRole().getId()));
 
         userValidator.validate(userModel, result);
         if(result.hasErrors()) {
@@ -139,20 +108,9 @@ public class UserController {
 
         User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
-
-        final String successMessage = messageSource.getMessage("valid.usersavesuccess", null, locale);
-        redirectAttributes.addFlashAttribute("successMsg", successMessage);
+        putRedirectMessage(SUCCESS_MSG, "msg.user.save.success", locale, redirectAttributes);
 
         return "redirect:/user/edit.htm";
-    }
-
-    @RequestMapping("/user/delete.htm")
-    public String deleteUser(HttpServletRequest request) {
-        String userId = request.getParameter("userId");
-        User user = userService.findByID(Integer.parseInt(userId));
-        userService.delete(user);
-
-        return "redirect:/user/list.htm";
     }
 
     /**

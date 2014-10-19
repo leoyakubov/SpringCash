@@ -19,12 +19,11 @@ public class HomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model, @RequestParam(value = "logout", required = false) String logout) {
-        logger.info("Welcome home! Current time is: "+ new Date());
+        logger.info("Welcome home! Current time is: " + new Date());
         logger.info("Call number: {}", callNumber++);
-		model.addAttribute("welcomeMsg", "Welcome");
 
         if (logout != null) {
-            model.addAttribute("msg", "You've been logged out successfully.");
+            model.addAttribute("successMsg", "You've been logged out successfully.");
         }
 
 		return "home";
