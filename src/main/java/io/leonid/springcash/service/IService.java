@@ -14,5 +14,7 @@ public interface IService<T extends BaseEntity> {
 
     T insertOrUpdate(T entity);
 
+    List<T> insertOrUpdateMultipleEntities(List<T> entities);
+
     void delete(T entity);
 }

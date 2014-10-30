@@ -3,9 +3,7 @@ package io.leonid.springcash.web.admin;
 import io.leonid.springcash.model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by leonid on 15.10.14.
@@ -18,22 +16,32 @@ public class UserListModel {
      * -add multiselection option and multiuser action buttons
     * */
 
-    private List<User> users = new ArrayList<>();
-    private Map<Integer, User> updatedUsers = new HashMap<>();
+    private List<UserListItem> userListItems = new ArrayList();
+
+    public List<UserListItem> getUserListItems() {
+        return userListItems;
+    }
+
+    public void setUserListItems(List<UserListItem> userListItems) {
+        this.userListItems = userListItems;
+    }
 
     public UserListModel(List<User> users) {
-            this.users = users;
+        createListItemsFromUsers(users);
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public Map<Integer, User> getUpdatedUsers() {
-        return updatedUsers;
-    }
-
-    public void setUpdatedUsers(Map<Integer, User> updatedUsers) {
-        this.updatedUsers = updatedUsers;
+    private void createListItemsFromUsers(List<User> users) {
+        for (User user : users) {
+            UserListItem item = new UserListItem();
+            item.setId(user.getId());
+            item.setLogin(user.getLogin());
+            item.setPassword(user.getPassword());
+            item.setEmail(user.getEmail());
+            item.setActive(user.isActive());
+            item.setRole(user.getRole());
+            item.setFirstName(user.getFirstName());
+            item.setLastName(user.getLastName());
+            userListItems.add(item);
+        }
     }
 }

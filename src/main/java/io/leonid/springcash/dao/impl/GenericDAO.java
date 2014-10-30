@@ -2,6 +2,7 @@ package io.leonid.springcash.dao.impl;
 
 import io.leonid.springcash.dao.IDAO;
 import io.leonid.springcash.model.BaseEntity;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,6 +54,24 @@ public class GenericDAO<T extends BaseEntity> implements IDAO<T> {
 
             return entity;
         }
+    }
+
+    @Override
+    public List<T> insertOrUpdateMultipleEntities(List<T> entities) {
+        Session session = sessionFactory.getCurrentSession();
+
+        for (int i=0; i < entities.size(); i++) {
+            T entity = entities.get(i);
+            session.merge(entity);
+
+            if (i % 20 == 0) { //20, same as the JDBC batch size
+                //flush a batch of inserts and release memory:
+                session.flush();
+                session.clear();
+            }
+        }
+
+        return entities;
     }
 
     @Override

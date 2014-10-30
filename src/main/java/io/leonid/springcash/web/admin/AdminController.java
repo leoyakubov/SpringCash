@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class AdminController extends GenericController{
         return userService.findAll();
     }
 
-    @ModelAttribute("userListCommand")
+    @ModelAttribute("userListModel")
     public UserListModel users() {
         UserListModel userListModel = new UserListModel(userList());
 
@@ -77,8 +78,8 @@ public class AdminController extends GenericController{
     }
 
     @RequestMapping(value = "/addUser.htm", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("userModel")
-                          UserModel userModel, BindingResult result) {
+    public String addUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result,
+                          Locale locale, final RedirectAttributes redirectAttributes) {
         userModel.setRole(roleService.findByName(userModel.getRole().getName()));
 
         userValidator.validate(userModel,result);
@@ -92,6 +93,7 @@ public class AdminController extends GenericController{
 
         User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
+        putRedirectMessage(SUCCESS_MSG, "msg.user.add.success", locale, redirectAttributes);
 
         return "redirect:/users.htm";
     }
@@ -104,25 +106,31 @@ public class AdminController extends GenericController{
     }
 
     @RequestMapping(value = "/saveUsers.htm", method = RequestMethod.POST)
-    public String saveUsers(@ModelAttribute("users") UserListModel userListModel, BindingResult result,
+    public String saveUsers(@ModelAttribute("userListModel") UserListModel userListModel, BindingResult result,
                             Locale locale, final RedirectAttributes redirectAttributes) {
-        if (userListModel != null && userListModel.getUsers().size() > 0) {
-            /*List<User> users = userListModel.getChangedUsers();
-            for (User user : users) {
-                userService.insertOrUpdate(user);
-            }*/
+        if (userListModel != null && userListModel.getUserListItems().size() > 0) {
+            List<User> users = getChangedUsers(userListModel);
+            if (users != null && users.size() > 0) {
+                userService.insertOrUpdateMultipleEntities(users);
+            }
         }
 
-        putRedirectMessage(SUCCESS_MSG, "msg.users.edit.save.success", locale, redirectAttributes);
+        putRedirectMessage(SUCCESS_MSG, "msg.users.edit.success", locale, redirectAttributes);
 
         return "redirect:users.htm";
     }
 
     @RequestMapping("/deleteUser.htm")
-    public String deleteUser(HttpServletRequest request) {
+    public String deleteUser(HttpServletRequest request, Locale locale, final RedirectAttributes redirectAttributes) {
         String userId = request.getParameter("userId");
         User user = userService.findByID(Integer.parseInt(userId));
-        userService.delete(user);
+        if (user != null) {
+            userService.delete(user);
+            putRedirectMessage(SUCCESS_MSG, "msg.user.delete.success", locale, redirectAttributes);
+        }
+        else {
+            putRedirectMessage(ERROR_MSG, "msg.user.delete.failure", locale, redirectAttributes);
+        }
 
         return "redirect:/users.htm";
     }
@@ -132,5 +140,33 @@ public class AdminController extends GenericController{
         logger.info("Admin page controller");
 
         return "admin/admin";
+    }
+
+    private List<User> getChangedUsers(UserListModel userListModel) {
+        List<User> users = new ArrayList<>();
+
+        for (UserListItem item : userListModel.getUserListItems()) {
+            if (item.isUpdated()) {
+                User user = constructUserFromUserItem(item);
+                users.add(user);
+            }
+        }
+
+        return users;
+    }
+
+    private User constructUserFromUserItem(UserListItem item) {
+        User user = new User();
+        user.setId(item.getId());
+        user.setLogin(item.getLogin());
+        user.setPassword(item.getPassword());
+        user.setEmail(item.getEmail());
+        user.setActive(item.isActive());
+        //user.setRole(item.getRole());
+        user.setRole(roleService.findByName(item.getRole().getName()));
+        user.setFirstName(item.getFirstName());
+        user.setLastName(item.getLastName());
+
+        return user;
     }
 }

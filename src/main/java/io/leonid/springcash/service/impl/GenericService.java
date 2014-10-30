@@ -38,6 +38,12 @@ public class GenericService<T extends BaseEntity> implements IService<T> {
 
     @Override
     @Transactional
+    public List<T> insertOrUpdateMultipleEntities(List<T> entities) {
+        return genericDAO.insertOrUpdateMultipleEntities(entities);
+    }
+
+    @Override
+    @Transactional
     public void delete(T entity) {
         genericDAO.delete(entity);
     }

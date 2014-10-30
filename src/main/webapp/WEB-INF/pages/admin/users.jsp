@@ -21,8 +21,16 @@
                 }
             }
 
-            function setUpdatingUserCheckbox(id) {
-                document.getElementById("")
+            function setUpdated(id) {
+                id--;
+                var checkboxId = "userListItems" + id + ".updated1";
+                console.log("ID: " + checkboxId);
+                document.getElementById(checkboxId).checked = true;
+            }
+
+            function f() {
+                console.log("Submiting...");
+                console.log(userListModel);
             }
         </script>
     </head>
@@ -38,12 +46,13 @@
         </form:form>
 
         <c:if  test="${!empty userList}">
-            <form:form method="post" action="saveUsers.htm" modelAttribute="userListCommand">
+            <form:form method="post" action="saveUsers.htm" modelAttribute="userListModel">
                 <table class="data">
                     <tr>
                         <th>&nbsp;</th>
                         <th>No.</th>
-                        <th>Name</th>
+                        <th>First name</th>
+                        <th>Last name</th>
                         <th>Login</th>
                         <th>Email</th>
                         <th>Is Active</th>
@@ -51,26 +60,27 @@
                         <th>&nbsp;</th>
                     </tr>
 
-                    <c:forEach items="${userListCommand.users}" var="user" varStatus="status">
+                    <c:forEach items="${userListModel.userListItems}" var="user" varStatus="status">
                         <tr>
-                            <td><%--<form:checkbox path="updatedUsers[${status.index}].value"/>--%></td>
+                            <td><form:checkbox path="userListItems[${status.index}].updated"/></td>
                             <td align="center">${status.count}</td>
-                            <td>${user.firstName}, ${user.lastName}</td>
-                            <td>${user.login}</td>
-                            <td>${user.email}</td>
-                            <td><form:checkbox path="users[${status.index}].active" onclick='javascript:setUpdatingUserCheckbox("${user.id}")'/></td>
-                            <td><form:select path="users[${status.index}].role.name">
+                            <td><form:label path="userListItems[${status.index}].firstName">${user.firstName}</form:label></td>
+                            <td><form:label path="userListItems[${status.index}].lastName">${user.lastName}</form:label></td>
+                            <td><form:label path="userListItems[${status.index}].login">${user.login}</form:label></td>
+                            <td><form:label path="userListItems[${status.index}].email">${user.email}</form:label></td>
+                            <td><form:checkbox path="userListItems[${status.index}].active" onclick='javascript:setUpdated("${user.id}")'/></td>
+                            <td><form:select path="userListItems[${status.index}].role.name" onchange='javascript:setUpdated("${user.id}")'>
                                     <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
-                                </form:select></td>
-
-
-                            <%-- <td><a href="/user/edit.htm?userId=${user.id}"><spring:message code="label.edituser"/></a></td>
-                            <td><form:errors path="user" cssStyle="color: #ff0000;"/></td>--%>
+                                </form:select>
+                            </td>
                             <td><a href="#" onclick='javascript:deleteItem("${user.id}")'><spring:message code="label.deleteuser"/></a></td>
                         </tr>
                     </c:forEach>
                 </table>
-                <input type="submit" value="Save" />
+                <div>
+                    <input type="submit" value="Save" onclick='javascript:f(userListModel)'/>
+                    <input type="reset" value="<spring:message code="label.reset"/>" <%--onclick="location.href='list.htm'"--%>/>
+                </div>
             </form:form>
         </c:if>
     </body>
