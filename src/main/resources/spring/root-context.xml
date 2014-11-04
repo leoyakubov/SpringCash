@@ -1,13 +1,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- Root Context: defines shared resources visible to all other web components -->
-
 
     <!-- Data Access Resources -->
     <import resource="data.xml" />
@@ -15,6 +17,7 @@
     <!-- Folders where to search for (@Repository, @Service) -->
     <context:component-scan base-package="io.leonid.springcash.dao"/>
     <context:component-scan base-package="io.leonid.springcash.service"/>
+    <context:component-scan base-package="io.leonid.springcash.web"/>
 
     <!-- Messages-->
     <bean id="messageSource"
@@ -29,4 +32,12 @@
 
     <!-- Security -->
     <import resource="security.xml" />
+
+    <!-- Enable AspectJ style of Spring AOP -->
+    <aop:aspectj-autoproxy>
+        <aop:include name="mainAspect" />
+    </aop:aspectj-autoproxy>
+
+    <!-- Aspects -->
+    <bean id="mainAspect" class="io.leonid.springcash.aop.MainAspect"/>
 </beans>
