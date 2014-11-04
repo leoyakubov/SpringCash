@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by leonid on 21.08.2014.
  */
 @Controller
-@RequestMapping("/about.htm")
 public class AboutController {
-    @RequestMapping(method = RequestMethod.GET)
+
+    private static final String ABOUT_PAGE = "/about.htm";
+    private static final String ABOUT_VIEW = "about";
+
+    @RequestMapping(value = ABOUT_PAGE, method = RequestMethod.GET)
     public String printWelcome(ModelMap model) {
         model.addAttribute("aboutMsg", "About page");
-        return "about";
+        return ABOUT_VIEW;
     }
 }

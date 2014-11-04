@@ -23,13 +23,15 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+    private static final String LOGIN_PAGE = "/login.htm";
+    private static final String LOGIN_VIEW = "security/login";
+    private static final String ERROR403_PAGE = "/error403.htm";
+    private static final String ERROR403_VIEW = "security/error403";
 
-    @RequestMapping(value = "/login.htm", method = RequestMethod.GET)
+    @RequestMapping(value = LOGIN_PAGE, method = RequestMethod.GET)
     public String loginPage(final ModelMap map,
                             @RequestParam(value = "error", required = false) String error,
                             HttpServletRequest request) {
-        logger.info("Login page controller");
-
         if (error != null) {
             String errorMsg = getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION");
             map.addAttribute("error", errorMsg);
@@ -45,10 +47,10 @@ public class LoginController {
             }
         }
 
-        return "security/login";
+        return LOGIN_VIEW;
     }
 
-    @RequestMapping(value = "/error403.htm", method = RequestMethod.GET)
+    @RequestMapping(value = ERROR403_PAGE, method = RequestMethod.GET)
     public String accesssDenied(final ModelMap map) {
         //check if user is login
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -59,7 +61,7 @@ public class LoginController {
 
         logger.error("Access denied for user {}", map.get("username"));
 
-        return "security/error403";
+        return ERROR403_VIEW;
     }
 
     /**

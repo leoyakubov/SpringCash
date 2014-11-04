@@ -16,7 +16,7 @@
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
     <%
-        response.sendRedirect("admin.htm");
+        response.sendRedirect("admin/console.htm");
     %>
 </sec:authorize>
 

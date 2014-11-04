@@ -51,8 +51,8 @@
         <li><a href="<c:url value="/about.htm"/>"><spring:message code="title.about"/></a></li>
         <br/>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <li><a href="<c:url value="/admin.htm"/>"><spring:message code="title.admin"/></a></li>
-            <li><a href="<c:url value="/users.htm"/>"><spring:message code="title.users"/></a></li>
+            <li><a href="<c:url value="/admin/console.htm"/>"><spring:message code="title.admin"/></a></li>
+            <li><a href="<c:url value="/admin/editUsers.htm"/>"><spring:message code="title.users"/></a></li>
         </sec:authorize>
     </ul>
 </div>

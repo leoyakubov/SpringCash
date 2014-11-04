@@ -15,7 +15,7 @@
     </head>
     <body>
         <h2>Add new user</h2>
-        <form:form method="post" action="addUser.htm" commandName="userModel">
+        <form:form method="post" action="/admin/addUser.htm" commandName="userModel">
             <table>
                 <tr>
                     <td><form:label path="login"><spring:message code="label.login"/></form:label></td>
@@ -62,7 +62,7 @@
                         <input type="submit" value="<spring:message code="label.adduser"/>"/>
                     </td>
                     <td colspan="2">
-                        <input type="button" value="<spring:message code="label.cancel"/>" onclick="location.href='users.htm'"/>
+                        <input type="button" value="<spring:message code="label.cancel"/>" onclick="location.href='/admin/editUsers.htm'"/>
                     </td>
                 </tr>
             </table>

@@ -34,14 +34,14 @@
         <put-attribute name="body"   value="/WEB-INF/pages/user/edit.jsp"/>
     </definition>
 
-    <definition name="admin/admin" extends="baseLayout">
+    <definition name="admin/console" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.admin"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/admin/admin.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/console.jsp"/>
     </definition>
 
-    <definition name="admin/users" extends="baseLayout">
+    <definition name="admin/editUsers" extends="baseLayout">
         <put-attribute name="pageTitle" value="title.users"/>
-        <put-attribute name="body"   value="/WEB-INF/pages/admin/users.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/pages/admin/editUsers.jsp"/>
     </definition>
 
     <definition name="admin/addUser" extends="baseLayout">

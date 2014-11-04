@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/home.htm")
 public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+    private static final String HOME_PAGE = "/home.htm";
+    private static final String HOME_VIEW = "home";
+
     private static int callNumber = 1;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = HOME_PAGE, method = RequestMethod.GET)
 	public String printWelcome(ModelMap model, @RequestParam(value = "logout", required = false) String logout) {
         logger.info("Welcome home! Current time is: " + new Date());
         logger.info("Call number: {}", callNumber++);
@@ -26,6 +28,6 @@ public class HomeController {
             model.addAttribute("successMsg", "You've been logged out successfully.");
         }
 
-		return "home";
+		return HOME_VIEW;
 	}
 }

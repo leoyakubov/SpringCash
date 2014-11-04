@@ -36,6 +36,15 @@ import java.util.Map;
 public class AdminController extends GenericController{
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+    private static final String EDIT_USERS_PAGE = "/admin/editUsers.htm";
+    private static final String EDIT_USERS_VIEW = "admin/editUsers";
+    private static final String ADD_USER_PAGE = "/admin/addUser.htm";
+    private static final String ADD_USER_VIEW = "admin/addUser";
+    private static final String SAVE_USERS_PAGE = "/admin/saveUsers.htm";
+    private static final String DELETE_USER_PAGE = "/admin/deleteUser.htm";
+    private static final String CONSOLE_PAGE = "/admin/console.htm";
+    private static final String CONSOLE_VIEW = "admin/console";
+
     @Autowired
     private IUserService userService;
     @Autowired
@@ -67,24 +76,22 @@ public class AdminController extends GenericController{
         return userListModel;
     }
 
-    @RequestMapping(value = "/addUser.htm", method = RequestMethod.GET)
+    @RequestMapping(value = ADD_USER_PAGE, method = RequestMethod.GET)
     public String prepareAddUserForm(ModelMap modelMap) {
-        logger.info("AdminController.addUser called");
-
         UserModel userModel = new UserModel();
         modelMap.addAttribute("userModel", userModel);
 
-        return "admin/addUser";
+        return ADD_USER_VIEW;
     }
 
-    @RequestMapping(value = "/addUser.htm", method = RequestMethod.POST)
+    @RequestMapping(value = ADD_USER_PAGE, method = RequestMethod.POST)
     public String addUser(@ModelAttribute("userModel") UserModel userModel, BindingResult result,
                           Locale locale, final RedirectAttributes redirectAttributes) {
         userModel.setRole(roleService.findByName(userModel.getRole().getName()));
 
         userValidator.validate(userModel,result);
         if(result.hasErrors()) {
-            return "admin/addUser";
+            return ADD_USER_VIEW;
         }
 
         //Encode plain text password into bcrypt hash
@@ -95,32 +102,30 @@ public class AdminController extends GenericController{
         userService.insertOrUpdate(user);
         putRedirectMessage(SUCCESS_MSG, "msg.user.add.success", locale, redirectAttributes);
 
-        return "redirect:/users.htm";
+        return "redirect:" + EDIT_USERS_PAGE;
     }
 
-    @RequestMapping(value = "/users.htm", method = RequestMethod.GET)
+    @RequestMapping(value = EDIT_USERS_PAGE, method = RequestMethod.GET)
     public String listUsers(Map<String, Object> map) {
-        logger.info("UserController.listUsers called");
-
-        return "admin/users";
+        return EDIT_USERS_VIEW;
     }
 
-    @RequestMapping(value = "/saveUsers.htm", method = RequestMethod.POST)
+    @RequestMapping(value = SAVE_USERS_PAGE, method = RequestMethod.POST)
     public String saveUsers(@ModelAttribute("userListModel") UserListModel userListModel, BindingResult result,
                             Locale locale, final RedirectAttributes redirectAttributes) {
+
         if (userListModel != null && userListModel.getUserListItems().size() > 0) {
             List<User> users = getChangedUsers(userListModel);
             if (users != null && users.size() > 0) {
                 userService.insertOrUpdateMultipleEntities(users);
+                putRedirectMessage(SUCCESS_MSG, "msg.users.edit.success", locale, redirectAttributes);
             }
         }
 
-        putRedirectMessage(SUCCESS_MSG, "msg.users.edit.success", locale, redirectAttributes);
-
-        return "redirect:users.htm";
+        return "redirect:" + EDIT_USERS_PAGE;
     }
 
-    @RequestMapping("/deleteUser.htm")
+    @RequestMapping(DELETE_USER_PAGE)
     public String deleteUser(HttpServletRequest request, Locale locale, final RedirectAttributes redirectAttributes) {
         String userId = request.getParameter("userId");
         User user = userService.findByID(Integer.parseInt(userId));
@@ -132,20 +137,19 @@ public class AdminController extends GenericController{
             putRedirectMessage(ERROR_MSG, "msg.user.delete.failure", locale, redirectAttributes);
         }
 
-        return "redirect:/users.htm";
+        return "redirect:" + EDIT_USERS_PAGE;
     }
 
-    @RequestMapping(value = "/admin.htm", method = RequestMethod.GET)
+    @RequestMapping(value = CONSOLE_PAGE, method = RequestMethod.GET)
     public String adminPage(final ModelMap map) {
-        logger.info("Admin page controller");
-
-        return "admin/admin";
+        return CONSOLE_VIEW;
     }
 
     private List<User> getChangedUsers(UserListModel userListModel) {
         List<User> users = new ArrayList<>();
 
-        for (UserListItem item : userListModel.getUserListItems()) {
+        List<UserListItem> items = userListModel.getUserListItems();
+        for (UserListItem item : items) {
             if (item.isUpdated()) {
                 User user = constructUserFromUserItem(item);
                 users.add(user);
@@ -162,7 +166,6 @@ public class AdminController extends GenericController{
         user.setPassword(item.getPassword());
         user.setEmail(item.getEmail());
         user.setActive(item.isActive());
-        //user.setRole(item.getRole());
         user.setRole(roleService.findByName(item.getRole().getName()));
         user.setFirstName(item.getFirstName());
         user.setLastName(item.getLastName());

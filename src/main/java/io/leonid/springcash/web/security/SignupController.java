@@ -32,6 +32,10 @@ import java.util.Locale;
 public class SignupController extends GenericController{
     private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
 
+    private static final String SIGNUP_PAGE = "/signup.htm";
+    private static final String SIGNUP_VIEW = "security/signup";
+    private static final String HOME_PAGE = "/home.htm";
+
     @Autowired
     private IUserService userService;
     @Autowired
@@ -46,15 +50,15 @@ public class SignupController extends GenericController{
         binder.setValidator(userValidator);
     }
 
-    @RequestMapping(value = "/signup.htm", method = RequestMethod.GET)
+    @RequestMapping(value = SIGNUP_PAGE, method = RequestMethod.GET)
     public String prepareSignupForm(ModelMap modelMap) {
         UserModel userModel = new UserModel();
         modelMap.addAttribute("userModel", userModel);
 
-        return "security/signup";
+        return SIGNUP_VIEW;
     }
 
-    @RequestMapping(value = "/signup.htm", method = RequestMethod.POST)
+    @RequestMapping(value = SIGNUP_PAGE, method = RequestMethod.POST)
     public String signUp(@ModelAttribute("userModel")
                          UserModel userModel, BindingResult result,
                          Locale locale, final RedirectAttributes redirectAttributes) {
@@ -63,7 +67,7 @@ public class SignupController extends GenericController{
 
         userValidator.validate(userModel,result);
         if(result.hasErrors()) {
-            return "security/signup";
+            return SIGNUP_VIEW;
         }
 
         //Encode plain text password into bcrypt hash
@@ -74,6 +78,6 @@ public class SignupController extends GenericController{
         userService.insertOrUpdate(user);
         putRedirectMessage(SUCCESS_MSG, "msg.signup.success", locale, redirectAttributes);
 
-        return "redirect:/home.htm";
+        return "redirect:" + HOME_PAGE;
     }
 }

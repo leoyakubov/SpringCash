@@ -12,7 +12,6 @@
         <!--<intercept-url pattern="/update**" access="hasRole('ROLE_ADMIN') and isFullyAuthenticated()"/>-->
         <!-- redirect to 403 access denied -->
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user/**" access="isAuthenticated()"/>
         <intercept-url pattern="/login**" access="isAnonymous()" />
         <intercept-url pattern="/signup**" access="isAnonymous()" />

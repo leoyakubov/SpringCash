@@ -34,6 +34,11 @@ import java.util.Locale;
 public class UserController extends GenericController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private static final String USER_EDIT_PAGE = "/user/edit.htm";
+    private static final String USER_EDIT_VIEW = "user/edit";
+    private static final String SECURITY_LOGIN_VIEW = "security/login";
+    private static final String HOME_PAGE = "/home.htm";
+
     @Autowired
     private IUserService userService;
     @Autowired
@@ -64,7 +69,7 @@ public class UserController extends GenericController {
      * If user is login via remember me cookie, send login to ask for password again.
      * To avoid stolen remember me cookie to update info
      */
-    @RequestMapping(value = "/user/edit.htm", method = RequestMethod.GET)
+    @RequestMapping(value = USER_EDIT_PAGE, method = RequestMethod.GET)
     public String prepareEditUserForm(Locale locale, HttpServletRequest request, ModelMap modelMap,
                                       final RedirectAttributes redirectAttributes) {
         String view = "";
@@ -73,7 +78,7 @@ public class UserController extends GenericController {
             //send login for update
             setRememberMeTargetUrlToSession(request);
             modelMap.addAttribute("loginUpdate", true);
-            view = "security/login";
+            view = SECURITY_LOGIN_VIEW;
 
         } else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -83,19 +88,19 @@ public class UserController extends GenericController {
             if (user == null) {
                 putRedirectMessage(ERROR_MSG, "msg.nosuchuser", locale, redirectAttributes);
 
-                return "redirect:/home.htm";
+                return "redirect:" + HOME_PAGE;
             }
 
             UserModel userModel = new UserModel(user);
             modelMap.addAttribute("userModel", userModel);
 
-            view = "user/edit";
+            view = USER_EDIT_VIEW;
         }
 
         return view;
     }
 
-    @RequestMapping(value = "/user/edit.htm", method = RequestMethod.POST)
+    @RequestMapping(value = USER_EDIT_PAGE, method = RequestMethod.POST)
     public String editUser(@ModelAttribute("userModel") UserModel userModel,
                            BindingResult result, Locale locale,
                            final RedirectAttributes redirectAttributes) {
@@ -103,14 +108,14 @@ public class UserController extends GenericController {
 
         userValidator.validate(userModel, result);
         if(result.hasErrors()) {
-            return "user/edit";
+            return USER_EDIT_VIEW;
         }
 
         User user = userModel.constructUserFromModel();
         userService.insertOrUpdate(user);
         putRedirectMessage(SUCCESS_MSG, "msg.user.save.success", locale, redirectAttributes);
 
-        return "redirect:/user/edit.htm";
+        return "redirect:" + USER_EDIT_PAGE;
     }
 
     /**
@@ -133,7 +138,7 @@ public class UserController extends GenericController {
     private void setRememberMeTargetUrlToSession(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session!=null){
-            session.setAttribute("targetUrl", "/user/edit.htm");
+            session.setAttribute("targetUrl", USER_EDIT_PAGE);
         }
     }
 }

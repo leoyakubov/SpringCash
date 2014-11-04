@@ -14,23 +14,19 @@
     <head>
         <script type="text/javascript">
             function deleteItem(id) {
-                var url = "/deleteUser.htm?userId=" + id;
+                var url = "/admin/deleteUser.htm?userId=" + id;
                 var OK = confirm('Delete this user?');
                 if (OK) {
+                    console.log("URL: " + url);
                     window.location = url;
                 }
             }
 
             function setUpdated(id) {
-                id--;
+                //id--;
                 var checkboxId = "userListItems" + id + ".updated1";
                 console.log("ID: " + checkboxId);
                 document.getElementById(checkboxId).checked = true;
-            }
-
-            function f() {
-                console.log("Submiting...");
-                console.log(userListModel);
             }
         </script>
     </head>
@@ -40,8 +36,11 @@
         <c:if test="${not empty successMsg}">
             <label style="color: green">${successMsg}</label>
         </c:if>
+        <c:if test="${not empty errorMsg}">
+            <label style="color: red">${errorMsg}</label>
+        </c:if>
 
-        <form:form method="get" action="/addUser.htm" commandName="user">
+        <form:form method="get" action="/admin/addUser.htm" commandName="user">
             <input type="submit" value="<spring:message code="label.adduser"/>"/>
         </form:form>
 
@@ -68,8 +67,8 @@
                             <td><form:label path="userListItems[${status.index}].lastName">${user.lastName}</form:label></td>
                             <td><form:label path="userListItems[${status.index}].login">${user.login}</form:label></td>
                             <td><form:label path="userListItems[${status.index}].email">${user.email}</form:label></td>
-                            <td><form:checkbox path="userListItems[${status.index}].active" onclick='javascript:setUpdated("${user.id}")'/></td>
-                            <td><form:select path="userListItems[${status.index}].role.name" onchange='javascript:setUpdated("${user.id}")'>
+                            <td><form:checkbox path="userListItems[${status.index}].active" onclick='javascript:setUpdated("${status.index}")'/></td>
+                            <td><form:select path="userListItems[${status.index}].role.name" onchange='javascript:setUpdated("${status.index}")'>
                                     <form:options items="${roleList}" itemValue="name" itemLabel="name"/>
                                 </form:select>
                             </td>
@@ -78,8 +77,8 @@
                     </c:forEach>
                 </table>
                 <div>
-                    <input type="submit" value="Save" onclick='javascript:f(userListModel)'/>
-                    <input type="reset" value="<spring:message code="label.reset"/>" <%--onclick="location.href='list.htm'"--%>/>
+                    <input type="submit" value="Save"/>
+                    <input type="reset" value="<spring:message code="label.reset"/>"/>
                 </div>
             </form:form>
         </c:if>
