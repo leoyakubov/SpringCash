@@ -17,7 +17,6 @@
     <!-- Folders where to search for (@Repository, @Service) -->
     <context:component-scan base-package="io.leonid.springcash.dao"/>
     <context:component-scan base-package="io.leonid.springcash.service"/>
-    <context:component-scan base-package="io.leonid.springcash.web"/>
 
     <!-- Messages-->
     <bean id="messageSource"
@@ -34,9 +33,7 @@
     <import resource="security.xml" />
 
     <!-- Enable AspectJ style of Spring AOP -->
-    <aop:aspectj-autoproxy>
-        <aop:include name="mainAspect" />
-    </aop:aspectj-autoproxy>
+    <aop:aspectj-autoproxy/>
 
     <!-- Aspects -->
     <bean id="mainAspect" class="io.leonid.springcash.aop.MainAspect"/>
