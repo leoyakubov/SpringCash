@@ -18,6 +18,7 @@
         <junit.version>4.8.2</junit.version>
         <slf4j.version>1.7.7</slf4j.version>
         <slf4j-log4j.version>1.6.4</slf4j-log4j.version>
+        <aspectj.version>1.8.2</aspectj.version>
     </properties>
 
     <dependencies>
@@ -100,6 +101,26 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- AspectJ dependencies -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
         <!-- Tiles -->
