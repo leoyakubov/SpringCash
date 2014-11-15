@@ -9,7 +9,7 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:hibernate.properties</value>
+                <value>classpath:data/hibernate.properties</value>
             </list>
         </property>
     </bean>
@@ -24,7 +24,7 @@
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="configLocation" value="classpath:data/hibernate.cfg.xml" />
     </bean>
 
     <!-- @Transactional -->

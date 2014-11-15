@@ -7,4 +7,5 @@ import io.leonid.springcash.model.User;
  */
 public interface IUserService extends IService<User> {
     User findByLogin(String login);
+    User findByEmail(String email);
 }

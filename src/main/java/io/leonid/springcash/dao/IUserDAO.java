@@ -7,4 +7,5 @@ import io.leonid.springcash.model.User;
  */
 public interface IUserDAO extends IDAO<User> {
     User findByLogin(String login);
+    User findByEmail(String email);
 }

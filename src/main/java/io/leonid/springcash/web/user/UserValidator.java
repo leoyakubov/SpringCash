@@ -31,14 +31,20 @@ public class UserValidator extends GenericValidator implements Validator {
         User user = userService.findByLogin(model.getLogin());
 
         if (isAdded) {
-           if (!model.getPassword().equals(model.getConfirmedPassword())) {
+            if (!model.getPassword().equals(model.getConfirmedPassword())) {
                 errors.rejectValue("confirmedPassword", "valid.password.conf.diff");
-           }
+            }
 
-           //Check if the user's login is unique (on add new one)
-           if (user != null) {
+            //Check if the user's login is unique (on add new one)
+            if (user != null) {
                 errors.rejectValue("login", "valid.login.notunique");
-           }
+            }
+
+            //Check if the user's email is unique (on add new one)
+            user = userService.findByEmail(model.getEmail());
+            if (user != null) {
+                errors.rejectValue("email", "valid.email.notunique");
+            }
         }
         else { //Is edited
             //Set password before validation

@@ -56,11 +56,11 @@ public class HibernateTest {
 
         Role role = new Role();
         if (user.getRole().getName().equals("User")) {
-            role.setId(3);
+            role.setId(3L);
             role.setName("Administreator");
         }
         else {
-            role.setId(5);
+            role.setId(5L);
             role.setName("User");
         }
 
@@ -86,7 +86,7 @@ public class HibernateTest {
         System.out.println("===============================");
         user.setActive(!user.isActive());
 
-        User savedUser = dao.insertOrUpdate(user);
+        User savedUser = dao.update(user);
 
         System.out.println("===============================");
         System.out.println("Saved user: " + savedUser);

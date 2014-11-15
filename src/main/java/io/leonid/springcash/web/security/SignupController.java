@@ -63,9 +63,10 @@ public class SignupController extends GenericController{
                          UserModel userModel, BindingResult result,
                          Locale locale, final RedirectAttributes redirectAttributes) {
         //Set default role for a new user
-        userModel.setRole(roleService.findByName(Role.ROLE_USER));
+        Role userRole = roleService.findByName(Role.ROLE_USER);
+        userModel.setRole(userRole);
 
-        userValidator.validate(userModel,result);
+        userValidator.validate(userModel, result);
         if(result.hasErrors()) {
             return SIGNUP_VIEW;
         }
@@ -75,7 +76,7 @@ public class SignupController extends GenericController{
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
         User user = userModel.constructUserFromModel();
-        userService.insertOrUpdate(user);
+        userService.insert(user);
         putRedirectMessage(SUCCESS_MSG, "msg.signup.success", locale, redirectAttributes);
 
         return "redirect:" + HOME_PAGE;

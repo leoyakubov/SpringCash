@@ -6,7 +6,7 @@ import io.leonid.springcash.model.Role;
  * Created by leonid on 16.10.14.
  */
 public class UserListItem {
-    private int id;
+    private long id;
     private boolean updated = false;
     private String login;
     private String password;
@@ -16,11 +16,11 @@ public class UserListItem {
     private String firstName;
     private String lastName;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -8,6 +8,7 @@ USE `springcash`;
 -- Drop tables
 --
 DROP TABLE IF EXISTS `persistent_logins`;
+DROP TABLE IF EXISTS `log_records`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `roles`;
 
@@ -49,4 +50,20 @@ CREATE TABLE `users` (
   UNIQUE KEY `uk_users_email` (`email`),
   KEY `fk_role` (`role`),
   CONSTRAINT `fk_users_roles_id` FOREIGN KEY (`role`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `log_records`
+--
+CREATE TABLE `log_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tstamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `user` int(11),
+  `action` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `area` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user` (`user`),
+  CONSTRAINT `fk_log_records_users_id` FOREIGN KEY (`user`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;

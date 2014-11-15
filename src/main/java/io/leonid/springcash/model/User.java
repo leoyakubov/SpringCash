@@ -27,7 +27,7 @@ public class User extends BaseEntity{
     @NotEmpty
     private String email;
 
-    @Column(name = "is_active", nullable = false, unique = false)
+    @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
 
     @ManyToOne(cascade = CascadeType.MERGE)

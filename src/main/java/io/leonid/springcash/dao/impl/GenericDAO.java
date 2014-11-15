@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class GenericDAO<T extends BaseEntity> implements IDAO<T> {
     }
 
     @Override
-    public T findByID(final Integer id) {
+    public T findByID(final Long id) {
         if (id == null) {
             return null;
         }
@@ -43,26 +44,24 @@ public class GenericDAO<T extends BaseEntity> implements IDAO<T> {
     }
 
     @Override
-    public T insertOrUpdate(final T entity) {
-        if (entity.getId() == null) {
-            Integer id = (Integer) sessionFactory.getCurrentSession().save(entity);
-            entity.setId(id);
+    public Long insert(T entity) {
+        return (Long) sessionFactory.getCurrentSession().save(entity);
+    }
 
-            return entity;
-        } else {
-            sessionFactory.getCurrentSession().merge(entity);
-
-            return entity;
-        }
+    @Override
+    public T update(T entity) {
+        return (T) sessionFactory.getCurrentSession().merge(entity);
     }
 
     @Override
     public List<T> insertOrUpdateMultipleEntities(List<T> entities) {
         Session session = sessionFactory.getCurrentSession();
 
+        List<T> newEntities = new ArrayList<>();
+
         for (int i=0; i < entities.size(); i++) {
             T entity = entities.get(i);
-            session.merge(entity);
+            newEntities.add((T) session.merge(entity));
 
             if (i % 20 == 0) { //20, same as the JDBC batch size
                 //flush a batch of inserts and release memory:

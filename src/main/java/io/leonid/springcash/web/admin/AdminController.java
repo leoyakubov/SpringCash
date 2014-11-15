@@ -99,7 +99,7 @@ public class AdminController extends GenericController{
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
         User user = userModel.constructUserFromModel();
-        userService.insertOrUpdate(user);
+        userService.insert(user);
         putRedirectMessage(SUCCESS_MSG, "msg.user.add.success", locale, redirectAttributes);
 
         return "redirect:" + EDIT_USERS_PAGE;
@@ -128,7 +128,7 @@ public class AdminController extends GenericController{
     @RequestMapping(DELETE_USER_PAGE)
     public String deleteUser(HttpServletRequest request, Locale locale, final RedirectAttributes redirectAttributes) {
         String userId = request.getParameter("userId");
-        User user = userService.findByID(Integer.parseInt(userId));
+        User user = userService.findByID(Long.parseLong(userId));
         if (user != null) {
             userService.delete(user);
             putRedirectMessage(SUCCESS_MSG, "msg.user.delete.success", locale, redirectAttributes);

@@ -22,17 +22,34 @@ public class UserDAO extends GenericDAO<User> implements IUserDAO {
 
     @Override
     public User findByLogin(String login) {
-        if (login == null) {
+        if (login == null && login.isEmpty()) {
             return null;
         }
 
         Query query = sessionFactory.getCurrentSession().createQuery("FROM " + User.class.getName() + " WHERE login=:login");
         query.setParameter("login", login);
-        List<User> listUser = query.list();
+        List<User> userList = query.list();
 
-        if (listUser != null && !listUser.isEmpty()) {
-            return listUser.get(0);
+        if (userList != null && !userList.isEmpty()) {
+            return userList.get(0);
         }
+        return null;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        if (email == null && email.isEmpty()) {
+            return null;
+        }
+
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM " + User.class.getName() + " WHERE email=:email");
+        query.setParameter("email", email);
+        List<User> userList = query.list();
+
+        if (userList != null && !userList.isEmpty()) {
+            return userList.get(0);
+        }
+
         return null;
     }
 }

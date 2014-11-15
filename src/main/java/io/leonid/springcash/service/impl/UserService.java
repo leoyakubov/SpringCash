@@ -30,6 +30,12 @@ public class UserService extends GenericService<User> implements IUserService, U
         return userDAO.findByLogin(login);
     }
 
+    @Override
+    @Transactional
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
+
     @Transactional
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
         io.leonid.springcash.model.User user = userDAO.findByLogin(login);

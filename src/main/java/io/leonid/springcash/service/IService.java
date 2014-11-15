@@ -10,9 +10,11 @@ import java.util.List;
 public interface IService<T extends BaseEntity> {
     List<T> findAll();
 
-    T findByID(Integer id);
+    T findByID(Long id);
 
-    T insertOrUpdate(T entity);
+    Long insert(T entity);
+
+    T update(T entity);
 
     List<T> insertOrUpdateMultipleEntities(List<T> entities);
 

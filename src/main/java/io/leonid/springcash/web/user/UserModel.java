@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * Created by leonid on 22.09.14.
  */
 public class UserModel {
-    private int id;
+    private long id;
 
     @NotBlank(message = "{valid.login.notempty}")
     @Size(min=3, max=30, message = "{valid.login.size}")
@@ -67,11 +67,11 @@ public class UserModel {
         return user;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@
         <property name="connection.password">springcashpass</property>
 
         &lt;!&ndash; SQL dialect &ndash;&gt;
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="dialect">org.data.dialect.MySQLDialect</property>
 
         &lt;!&ndash; JDBC connection pool (use the built-in) &ndash;&gt;
         <property name="connection.pool_size">1</property>
@@ -19,7 +19,7 @@
         &lt;!&ndash; Echo all executed SQL to stdout &ndash;&gt;
         <property name="show_sql">true</property>
 
-        <property name="hibernate.hbm2ddl.auto">update</property>-->
+        <property name="data.hbm2ddl.auto">update</property>-->
 
 
         <!--Mapped classes -->

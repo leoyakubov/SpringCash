@@ -36,5 +36,8 @@
     <aop:aspectj-autoproxy/>
 
     <!-- Aspects -->
+    <bean id="aspectUtils" class="io.leonid.springcash.aop.AspectUtils"/>
     <bean id="mainAspect" class="io.leonid.springcash.aop.MainAspect"/>
+    <bean id="userAspect" class="io.leonid.springcash.aop.UserAspect"/>
+    <bean id="adminAspect" class="io.leonid.springcash.aop.AdminAspect"/>
 </beans>

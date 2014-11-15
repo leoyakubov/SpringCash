@@ -112,7 +112,7 @@ public class UserController extends GenericController {
         }
 
         User user = userModel.constructUserFromModel();
-        userService.insertOrUpdate(user);
+        userService.update(user);
         putRedirectMessage(SUCCESS_MSG, "msg.user.save.success", locale, redirectAttributes);
 
         return "redirect:" + USER_EDIT_PAGE;

@@ -5,6 +5,7 @@ import io.leonid.springcash.model.BaseEntity;
 import io.leonid.springcash.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,14 +27,20 @@ public class GenericService<T extends BaseEntity> implements IService<T> {
 
     @Override
     @Transactional
-    public T findByID(Integer id) {
+    public T findByID(Long id) {
         return genericDAO.findByID(id);
     }
 
     @Override
     @Transactional
-    public T insertOrUpdate(T entity) {
-        return genericDAO.insertOrUpdate(entity);
+    public Long insert(T entity) {
+        return genericDAO.insert(entity);
+    }
+
+    @Override
+    @Transactional
+    public T update(T entity) {
+        return genericDAO.update(entity);
     }
 
     @Override
